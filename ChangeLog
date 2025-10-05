@@ -1,0 +1,116 @@
+
+
+Release Beta 0.41
+* now you can move the Petri Dish with the mouse! (Thanks to Zaskar)
+* simplifying Ruby to Bash (mainly because this year Gaston is not in the project)
+* some cleanups of older files in lib
+
+=========================================================================
+
+Release Beta 0.40
+* WARNING: release 0.40 is NOT backward compatible because important changes in rules and microorganisms interface. 
+* time decoupling: change the time simulation to one MO per moment
+* reproduction: now by mitosis ( no more sexual reproductions ;-) )
+* MO interface: new methods and signatures (mitosis, move, update); internal energy, position and colony ID;
+* GUI: new 3D!!!
+* automatic backups for: results.yml results.txt petri.h
+* misc: almost all petri.h and colony are new; more translations in source and documentarion, updated examples in MOs, etc...
+
+=========================================================================
+
+Release RB-0.30
+* Only one building of comvida: with all microorganisms and selection of them by command line
+* Incorporation doxygen: documentation system for the source code
+* General translations: root documents, directories and names of generated files
+* IMPORTANT for microorganisms developers: removed distNutri from defs.h, now you can get the nutrient distribution by agar.distNutri()
+
+=========================================================================
+
+version 0.24
+++ arreglos en la implementacion de max tiempo
+
+version 0.23
+++ max. tiempo por colonia
+
+version 0.22
+++ atenuación del color de acuerdo a la energía de cada MO
+
+version 0.21
+++ al luchar el perdedor pierde una cantidad de energia igual a la diferencia de energias de los dos competidores (si queda con menos de cero se muere)
+++ informa la energia total de la colonia ganadora (en una nueva linea para que no quede tan largo)
+++ separo un poco las lineas de texto en la interfaz grafica
+
+version 0.20
+++ actualizacion math.h a cmath y similares
+++ en ciertos casos puede haber movimientos de mas de un paso (arreglar actualizacion de movs en Colonia)
+++ la reproduccion es anisotropa por la forma en que se recorren las celdas (aleatorizar los for)
+++ la ubicacion de los hijos tambien genera crecimiento anisotropo (aleatorizar busqueda de espacio libre)
+++ mejora algoritmo de desordenacion random (Petri::ordenAleatorio) (ahora con random_shuffle)
+++ tecla 'c' para avance continuo
+xx constructor Petri: creacion de los MO al final (?)
+
+version 0.19
+++ la comida se mueve
+
+version 0.18
+++ actualizacion g++
+xx cambios no documentados :(
+
+version 0.17
+++ pasar en limpio el diseño
+++ compilacion win/linux de draw_string_bitmap
+
+version 0.16
+++ pone el ganador
+++ Poner buscacomida y azar a coli y leva
+
+version 0.15
+-- se saca petri.moverColonias(); de display para ponerlo en keyboard
+  (así las colonias no avanzan en el resize)
+
+version 0.15
+xx numeritos con cantidad de vivos
+++ grupo en yahoogroups
+++ solucionar el tema de quien es quien
+
+
+version 0.13
+++ algunos retoques a la interfaz openGL
+++ arreglo el vector de vivos en la interfaz
+++ cálculo automático de escalas
+++ arreglo saltos grandes en la curva de población
+++ pongo dimensiones justas para 50x50 (500x500)
+++ pequeños retoques en Petri
+
+version 0.12
+++ incorporo nueva interfaz openGL de Jose
+++ distribución de nutrientes
+++ curva histórica de cantidad de vivos
+
+version 0.11
+++ resucitó el vector de colonias!!
+++ cuidado!! no utilizar srand en los microorganismos porque hace que
+   el en resto del programa se repita la misma secuencia de número 
+   cuando se creen muchos seguidos
+
+version 0.10
+++ petri no da la ocupación de las celdas, el programa principal 
+   debe pedírselo a agar
+++ nueva distribución de nutrientes con dos máximos
+
+version 0.09
+++ Colonia totalmente nueva
+++ **Muchos** cambios en Petri
+++ en defs solo quedan los typpedef de Microorganismo1 y 2
+++ insisto!! *muchos* cambios en Petri, quedo poco del anterior...
+
+version 0.08
+++ coli y levadura de Daniel.
+++ moxx y moyy se llaman las anteriores
+++ resta 5 por movimiento.
+++ cambio nombre del main
+++ retoques makefile
+++ directorio aparte para los MOs
+++ capsula de Petri circular
+++ OJO, quita solo 1 de energía por envejecimiento y 3 por movimiento
+

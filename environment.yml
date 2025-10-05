@@ -1,0 +1,11 @@
+name: alife
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - matplotlib>=3.5.0
+  - numpy>=1.21.0
+  - pip
+  - pip:
+    # Add any pip-only packages here if needed
