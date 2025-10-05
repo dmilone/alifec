@@ -1,46 +1,8 @@
-# ALIFEC - Artificial Life Contest
+# Artificial Life Contest
 
-A Python-based artificial life simulation system where microorganisms compete for resources in a Petri dish environment.
-
-## Features
-
-- **Single Match System**: Run contests between exactly 2 microorganism species
-- **Real-time Visualization**: Interactive matplotlib-based visualization with dual y-axis (energy + population)
-- **Headless Mode**: Run simulations without GUI using `--no-plot` flag
-- **Automatic Results**: Contest results are automatically saved with timestamps
-- **Daily Rankings**: Automatic generation and update of daily ranking files
-- **Global Rankings**: Comprehensive ranking system with backup functionality
-- **Dynamic Loading**: Automatically discovers microorganism implementations
+The framework provides the main rules of the game, a visualization interface using matplotlib, and examples of elementary microorganisms. The central idea of this project is the development of the environment, while users develop their own microorganisms to compete for survival in a common environment. All created microorganisms must compete for survival in a common petri dish. The colony that dominates the others and accumulates the most living energy wins the tournament.
 
 
-## Quick Start
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/alifec.git
-cd alifec
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### Basic Usage
-
-```bash
-# List available microorganisms
-python comvida.py --list-mos
-
-# Run a contest between two organisms (interactive mode)
-python comvida.py --dist 4 --colonies 3 4
-
-# Run a contest in headless mode (no GUI)
-python comvida.py --dist 4 --colonies 3 4 --no-plot
-
-# Update global rankings
-python comvida.py --update-global global_ranking.txt
-```
 
 ## Requirements
 
