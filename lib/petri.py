@@ -199,9 +199,18 @@ class Petri:
         """Obtener el nombre de la colonia"""
         return self.colonies[(id - 1) % N_COL].name()
 
+    # Aliases en español para compatibilidad y gradual migración
+    def nombre_colonia(self, id: int) -> str:
+        """Alias en español de colony_name (compatibilidad)."""
+        return self.colony_name(id)
+
     def author_name(self, id: int) -> str:
         """Obtener el nombre del autor"""
         return self.colonies[(id - 1) % N_COL].author()
+
+    def autor_colonia(self, id: int) -> str:
+        """Alias en español de author_name (compatibilidad)."""
+        return self.author_name(id)
 
     def can_move(self, old: Posicion, mov: Movimiento, neu: Posicion) -> bool:
         """Verificar si el movimiento es válido"""

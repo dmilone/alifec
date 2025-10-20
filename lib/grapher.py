@@ -355,3 +355,8 @@ class Grapher:
             'timestamp': datetime.now().isoformat(),
             'completed': self.contest_completed
         }
+
+    # Alias en español
+    def obtener_resultado_competencia(self) -> dict:
+        """Alias en español para get_contest_result."""
+        return self.get_contest_result()

@@ -308,6 +308,11 @@ class RankingSystem:
             
         except Exception as e:
             print(f"Error saving contest result: {e}")
+
+    # Alias en español
+    def guardar_resultado_competencia(self, contest_data: dict) -> None:
+        """Alias en español para save_contest_result."""
+        return self.save_contest_result(contest_data)
     
     def generate_daily_ranking(self) -> None:
         """Generate daily ranking from today's contest results"""
@@ -336,6 +341,10 @@ class RankingSystem:
             
         except Exception as e:
             print(f"Error generating daily ranking: {e}")
+
+    def generar_ranking_diario(self) -> None:
+        """Alias en español para generate_daily_ranking."""
+        return self.generate_daily_ranking()
     
     def update_global_ranking(self, global_ranking_file: str) -> int:
         """Update global ranking file with all available contest results

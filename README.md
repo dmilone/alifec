@@ -1,4 +1,4 @@
-# Concurso de Vida Artificial
+# COMpetencia de VIDa Artificial
 
 El marco provee las reglas principales del juego, una interfaz de visualización con matplotlib y ejemplos de microorganismos elementales. La idea central es el desarrollo del entorno; los usuarios crean sus propios microorganismos para competir por la supervivencia en un mismo ambiente. Todas las criaturas compiten en un mismo plato de Petri. La colonia que domine a las demás y acumule más energía viviente gana el concurso.
 
