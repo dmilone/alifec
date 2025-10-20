@@ -356,3 +356,12 @@ class Grapher:
             'completed': self.contest_completed
         }
     # Nota: el método ahora se llama en castellano `resultado_competencia`.
+
+    # -----------------------------
+    # Aliases para compatibilidad (nombres en inglés)
+    # Estos métodos existen para mantener compatibilidad con versiones
+    # anteriores que usan los nombres en inglés.
+    # Se colocan al final de la clase `Grapher`.
+    def get_contest_result(self) -> dict:
+        """Backward-compatibility alias for `resultado_competencia`."""
+        return self.resultado_competencia()

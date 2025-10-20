@@ -259,24 +259,19 @@ class RankingSystem:
         except Exception as e:
             print(f"Error saving ranking report: {e}")
     
-    def save_contest_result(self, contest_data: dict) -> None:
-        """
-        Save contest result to timestamped YAML file in results directory
-        
-        Args:
-            contest_data: Dictionary with contest result information
-        """
+    def guardar_resultado_competencia(self, contest_data: dict) -> None:
+        """Guardar resultado de la Competencia en formato YAML (archivo diario)."""
         try:
             # Create results directory if it doesn't exist
             import os
             os.makedirs(self.results_dir, exist_ok=True)
-            
+
             # Generate timestamped filename
             from datetime import datetime
             timestamp = datetime.now().strftime('%y%m%d')
             filename = f'contests_{timestamp}.yml'
             filepath = os.path.join(self.results_dir, filename)
-            
+
             # Load existing results or create new list
             contests = []
             if os.path.exists(filepath):
@@ -287,7 +282,7 @@ class RankingSystem:
                         contests = [c.strip() for c in contests if c.strip()]
                 except:
                     contests = []
-            
+
             # Append new result
             with open(filepath, 'a') as f:
                 if contests:  # If file has content, add separator
@@ -303,48 +298,39 @@ class RankingSystem:
                 f.write(f'  col2_final_energy: {contest_data["col2_final_energy"]:.2f}\n')
                 f.write(f'  duration: {contest_data["duration"]}\n')
                 f.write(f'  timestamp: "{contest_data["timestamp"]}"\n')
-            
+
             print(f"Contest result saved to: {filepath}")
-            
+
         except Exception as e:
             print(f"Error saving contest result: {e}")
 
-    def guardar_resultado_competencia(self, contest_data: dict) -> None:
-        """Guardar resultado de la Competencia en formato YAML (archivo diario)."""
-        # Reutiliza la implementación existente
-        return self.save_contest_result(contest_data)
-    
-    def generate_daily_ranking(self) -> None:
-        """Generate daily ranking from today's contest results"""
+    def generar_ranking_diario(self) -> None:
+        """Generar ranking diario a partir de los resultados de Competencia de hoy."""
         try:
             from datetime import datetime
-            
+
             # Get today's date for filename (YYMMDD only)
             today = datetime.now().strftime('%y%m%d')
-            
+
             # Generate ranking for today only
             files_loaded = self.load_contest_files(today)
-            
+
             if files_loaded == 0:
                 print("No contests found for today - no ranking generated.")
                 return
-            
+
             # Generate and save daily ranking report (overwrite existing file for same day)
             import os
             output_file = os.path.join(self.results_dir, f"ranking_{today}.txt")
             report = self.generate_ranking_report()
-            
+
             with open(output_file, 'w') as f:
                 f.write(report)
-            
+
             print(f"Daily ranking updated: {output_file}")
-            
+
         except Exception as e:
             print(f"Error generating daily ranking: {e}")
-
-    def generar_ranking_diario(self) -> None:
-        """Generar ranking diario a partir de los resultados de Competencia de hoy."""
-        return self.generate_daily_ranking()
     
     def update_global_ranking(self, global_ranking_file: str) -> int:
         """Update global ranking file with all available contest results
@@ -358,78 +344,95 @@ class RankingSystem:
         try:
             # Load all contest files
             files_loaded = self.load_contest_files("*")  # Load all files
-            
+
             if files_loaded == 0:
                 print("No contest files found to update global ranking.")
                 return 1
-            
+
             print(f"Loaded {files_loaded} contest file(s)")
             print(f"Total contests: {len(self.contests)}")
-            
+
             # Generate comprehensive ranking report
             report = self.generate_ranking_report(top_n=50)  # Show more entries for global
-            
+
             # Save to specified global ranking file in results directory
-            try:
-                import os
-                import shutil
-                from datetime import datetime
-                
-                bkp_dir = os.path.join(self.results_dir, "bkp")
-                filepath = os.path.join(self.results_dir, global_ranking_file)
-                
-                # Create backup directory if it doesn't exist
-                os.makedirs(bkp_dir, exist_ok=True)
-                
-                # Create backup of existing file if it exists
-                if os.path.exists(filepath):
-                    timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
-                    # Extract filename without extension for backup
-                    filename_base = os.path.splitext(global_ranking_file)[0]
-                    filename_ext = os.path.splitext(global_ranking_file)[1]
-                    backup_filename = f"{filename_base}_{timestamp}{filename_ext}"
-                    backup_filepath = os.path.join(bkp_dir, backup_filename)
-                    
-                    # Copy existing file to backup
-                    shutil.copy2(filepath, backup_filepath)
-                    print(f"Backup created: {backup_filepath}")
-                
-                # Write new ranking file
-                with open(filepath, 'w') as f:
-                    f.write(report)
-                print(f"Global ranking updated: {filepath}")
-                
-                # Also display the ranking
-                print("\n" + report)
-                
-                return 0
-                
-            except Exception as e:
-                print(f"Error writing to {filepath}: {e}")
-                return 1
-                
+            import os
+            import shutil
+
+            bkp_dir = os.path.join(self.results_dir, "bkp")
+            filepath = os.path.join(self.results_dir, global_ranking_file)
+
+            # Create backup directory if it doesn't exist
+            os.makedirs(bkp_dir, exist_ok=True)
+
+            # Create backup of existing file if it exists
+            if os.path.exists(filepath):
+                timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
+                filename_base = os.path.splitext(global_ranking_file)[0]
+                filename_ext = os.path.splitext(global_ranking_file)[1]
+                backup_filename = f"{filename_base}_{timestamp}{filename_ext}"
+                backup_filepath = os.path.join(bkp_dir, backup_filename)
+                shutil.copy2(filepath, backup_filepath)
+                print(f"Backup created: {backup_filepath}")
+
+            # Write new ranking file
+            with open(filepath, 'w') as f:
+                f.write(report)
+            print(f"Global ranking updated: {filepath}")
+
+            # Also display the ranking
+            print("\n" + report)
+
+            return 0
+
         except Exception as e:
             print(f"Error updating global ranking: {e}")
             return 1
 
+    # -----------------------------
+    # Aliases for backward compatibility (English names)
+    # These are placed at the end of the class and delegate to the
+    # Spanish-named methods to preserve backward compatibility.
+    def save_contest_result(self, contest_data: dict) -> None:
+        """Backward-compatibility alias for `guardar_resultado_competencia`."""
+        return self.guardar_resultado_competencia(contest_data)
+
+    def generate_daily_ranking(self) -> None:
+        """Backward-compatibility alias for `generar_ranking_diario`."""
+        return self.generar_ranking_diario()
+
 
 def main():
-    """Generate daily ranking and display results"""
+    """Command-line interface for ranking system.
+
+    Usage:
+      python lib/ranking.py [DATE_PATTERN]
+    If DATE_PATTERN is provided, only contests matching that YYMMDD pattern are loaded.
+    """
+    import sys
+
     ranking = RankingSystem()
-    files_loaded = ranking.load_contest_files()
-    
+
+    if len(sys.argv) > 1:
+        date_pattern = sys.argv[1]
+    else:
+        date_pattern = "*"
+
+    files_loaded = ranking.load_contest_files(date_pattern)
+
     if files_loaded == 0:
-        print("No contest files found.")
+        print(f"No contest files found matching pattern: contests_{date_pattern}.yml")
         return
-    
+
     print(f"Loaded {files_loaded} contest file(s)")
     print(f"Total contests: {len(ranking.contests)}")
-    
-    # Generate ranking report
+    print()
+
+    # Generate and display ranking report
     report = ranking.generate_ranking_report()
     print(report)
-    
-    # Save to file
+
+    # Save to file with timestamp
     timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
     output_file = f"results/ranking_{timestamp}.txt"
     ranking.save_ranking_report(output_file)
@@ -438,35 +441,50 @@ def main():
 if __name__ == "__main__":
     main()
 
+    # -----------------------------
+    # Aliases for backward compatibility (English names)
+    # These are placed at the end of the class and delegate to the
+    # Spanish-named methods to preserve backward compatibility.
+    def save_contest_result(self, contest_data: dict) -> None:
+        """Backward-compatibility alias for `guardar_resultado_competencia`."""
+        return self.guardar_resultado_competencia(contest_data)
+
+    def generate_daily_ranking(self) -> None:
+        """Backward-compatibility alias for `generar_ranking_diario`."""
+        return self.generar_ranking_diario()
+
 
 def main():
-    """
-    Command-line interface for ranking system
+    """Command-line interface for ranking system.
+
+    Usage:
+      python lib/ranking.py [DATE_PATTERN]
+    If DATE_PATTERN is provided, only contests matching that YYMMDD pattern are loaded.
     """
     import sys
-    
+
     ranking = RankingSystem()
-    
+
     if len(sys.argv) > 1:
         date_pattern = sys.argv[1]
     else:
         date_pattern = "*"
-    
+
     files_loaded = ranking.load_contest_files(date_pattern)
-    
+
     if files_loaded == 0:
         print(f"No contest files found matching pattern: contests_{date_pattern}.yml")
         return
-    
+
     print(f"Loaded {files_loaded} contest file(s)")
     print(f"Total contests: {len(ranking.contests)}")
     print()
-    
+
     # Generate and display ranking report
     report = ranking.generate_ranking_report()
     print(report)
-    
-    # Save to file
+
+    # Save to file with timestamp
     timestamp = datetime.now().strftime('%y%m%d_%H%M%S')
     output_file = f"results/ranking_{timestamp}.txt"
     ranking.save_ranking_report(output_file)

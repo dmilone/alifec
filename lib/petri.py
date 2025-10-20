@@ -316,3 +316,16 @@ class Petri:
             self.colonies.append(colony)
         else:
             print(f"Advertencia: Tipo de microorganismo {selected_col} no encontrado")
+
+    # -----------------------------
+    # Aliases para compatibilidad (nombres en inglés)
+    # Estos métodos existen para mantener compatibilidad con versiones
+    # anteriores que usan los nombres en inglés.
+    # Se colocan al final de la clase `Petri`.
+    def colony_name(self, id: int) -> str:
+        """Backward-compatibility alias for `nombre_colonia`."""
+        return self.nombre_colonia(id)
+
+    def author_name(self, id: int) -> str:
+        """Backward-compatibility alias for `autor_colonia`."""
+        return self.autor_colonia(id)
