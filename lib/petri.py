@@ -9,7 +9,7 @@ import time
 from typing import List, Dict, Type, Tuple
 from .defs import *
 from .agar import Posicion, Movimiento, agar, Celda
-from .colony import Colony
+from .colonia import Colonia
 from .microorg import Microorganismo
 
 
@@ -23,18 +23,25 @@ class Petri:
     """
 
     def __init__(self, radius: int, dist: int, selected_cols: List[int], microorg_classes: Dict[int, Type[Microorganismo]]):
-        self.radius: int = radius
+        # Dimensiones
+        self.radio: int = radius
         self.max_x: int = 2 * radius
         self.max_y: int = 2 * radius
-        self.dx: int = 0  # dirección del desplazamiento de nutrientes
-        self.dy: int = 0
+
+        # Desplazamiento de nutrientes (x,y)
+        self.despl_x: int = 0
+        self.despl_y: int = 0
+
+        # Distribución y tiempo
         self.dist_n: int = dist  # distribución de nutrientes actual
-        self.t: int = 0  # contador de tiempo
+        self.tiempo: int = 0  # contador de tiempo
         self.max_tx_col: float = PROD_X_COL / 1e6  # tiempo máximo por movimiento de colonia
 
-        self.colonies: List[Colony] = []
-        self.alives: List[Posicion] = []
-        self.microorg_classes = microorg_classes
+        # Estructuras principales
+        self.colonias: List[Colonia] = []
+        self.vivos: List[Posicion] = []
+        self.clases_microorg = microorg_classes
+        
 
         random.seed(int(time.time()))
 
@@ -50,7 +57,7 @@ class Petri:
 
         # Crear colonias
         for c in range(N_COL):
-            self.add_colony(radius, selected_cols[c])
+            self.agregar_colonia(radius, selected_cols[c])
 
         # Asignar posiciones y energías iniciales
         for c in range(N_COL):
@@ -58,9 +65,9 @@ class Petri:
             while mo < MOS_INICIAL:
                 pos = Posicion(random.randint(0, self.max_x - 1),
                                random.randint(0, self.max_y - 1))
-                if self.is_in_dish(pos):
+                if self.esta_en_plato(pos):
                     if agar.celdas[pos.x][pos.y].id_mo == VACIO:
-                        self.create_mo(pos, c + 1, E_INICIAL)
+                        self.crear_mo(pos, c + 1, E_INICIAL)
                         mo += 1
 
         # Calcular la distribución de nutrientes
@@ -80,6 +87,8 @@ class Petri:
         agar.ry = random.randint(0, self.max_y - 1) - self.max_y // 2
         self.dx = random.randint(-1, 1)
         self.dy = random.randint(-1, 1)
+
+    # Ya no exponemos aliases en inglés; solo nombres en castellano.
 
     def calculate_nutrients(self, x: int, y: int, dist: int) -> float:
         """Calcula la cantidad de nutrientes según el tipo de distribución"""
@@ -109,28 +118,31 @@ class Petri:
     def __del__(self):
         """Destructor"""
         try:
-            if hasattr(self, 'colonies'):
-                for colony in self.colonies:
+            if hasattr(self, 'colonias'):
+                for colony in self.colonias:
                     del colony
         except (AttributeError, TypeError):
             # Ignorar errores de limpieza durante la recolección de basura
             pass
 
-    def move_colonies(self) -> None:
-        """Aplicar reglas de la vida y avanzar las colonias"""
-        self.t += 1
+    # Nota: eliminados aliases en inglés. Usar los métodos en castellano.
+
+    def mover_colonias(self) -> None:
+        """Aplicar reglas de la vida y avanzar las colonias (nombres en castellano)."""
+        # Avanzar tiempo
+        self.tiempo += 1
 
         # Construir vector con las posiciones de organismos vivos
-        n_mos = sum(colony.n_alives() for colony in self.colonies)
-        self.alives = []
+        n_mos = sum(col.n_vivos() for col in self.colonias)
+        self.vivos = []
 
         for x in range(self.max_x):
             for y in range(self.max_y):
                 if agar.celdas[x][y].id_mo != VACIO:
-                    self.alives.append(Posicion(x, y))
+                    self.vivos.append(Posicion(x, y))
 
         # Vector para recorrer aleatoriamente todos los organismos vivos
-        initial_count = len(self.alives)
+        initial_count = len(self.vivos)
         rand_indices = list(range(initial_count))
         random.shuffle(rand_indices)
 
@@ -139,10 +151,10 @@ class Petri:
             if m >= len(rand_indices):
                 break
             rm = rand_indices[m]
-            if rm >= len(self.alives):
+            if rm >= len(self.vivos):
                 continue  # Saltar este organismo, murió
 
-            x, y = self.alives[rm].x, self.alives[rm].y
+            x, y = self.vivos[rm].x, self.vivos[rm].y
             id_mo = agar.celdas[x][y].id_mo
 
             if id_mo != VACIO:  # Podría haber muerto en combate con otro MO previo
@@ -161,35 +173,36 @@ class Petri:
                 agar.celdas[x][y].energia_mo -= E_VIVIR
 
                 # Pedir al MO que ejecute una iteración de vida
-                if c < len(self.colonies):
-                    self.colonies[c].live(x, y)
+                if c < len(self.colonias):
+                    # Iteración de vida usando API en castellano
+                    self.colonias[c].vivir(x, y)
 
                     # Restar energía por moverse
-                    if self.colonies[c].moved(x, y):
+                    if self.colonias[c].movio(x, y):
                         agar.celdas[x][y].energia_mo -= E_MOVERSE
 
                     # Verificar si murió
                     old = Posicion(x, y)
                     if agar.celdas[x][y].energia_mo <= 0:
-                        self.kill_mo(old)
+                        self.eliminar_mo(old)
                     else:
                         # Si quiere reproducirse
-                        if self.colonies[c].duplicate(x, y):
+                        if self.colonias[c].duplica(x, y):
                             self.mitosis(old)
 
                         # Movimiento o competencia
-                        if self.colonies[c].moved(x, y):
+                        if self.colonias[c].movio(x, y):
                             neu = Posicion(0, 0)
-                            if self.can_move(old, self.colonies[c].mov(x, y), neu):
+                            if self.puede_mover(old, self.colonias[c].movimiento(x, y), neu):
                                 if agar.celdas[neu.x][neu.y].id_mo == VACIO:
-                                    self.move_mo(old, neu)
+                                    self.mover_mo(old, neu)
                                 else:
                                     if agar.celdas[neu.x][neu.y].id_mo != id_mo:
                                         self.compite(old, neu)
 
         # Mover nutrientes
-        if self.t % 10 < 5:
-            if self.t % 6 == 0:
+        if self.tiempo % 10 < 5:
+            if self.tiempo % 6 == 0:
                 self.dx = random.randint(-1, 1)
                 self.dy = random.randint(-1, 1)
             agar.rx += self.dx
@@ -197,19 +210,20 @@ class Petri:
 
     def nombre_colonia(self, id: int) -> str:
         """Obtener el nombre de la colonia (nombre en castellano)."""
-        return self.colonies[(id - 1) % N_COL].name()
+        # Las colonias ahora exponen `nombre()` (Colonia.nombre)
+        return self.colonias[(id - 1) % N_COL].nombre()
 
     def autor_colonia(self, id: int) -> str:
         """Obtener el nombre del autor (en castellano)."""
-        return self.colonies[(id - 1) % N_COL].author()
+        return self.colonias[(id - 1) % N_COL].autor()
 
-    def can_move(self, old: Posicion, mov: Movimiento, neu: Posicion) -> bool:
-        """Verificar si el movimiento es válido"""
+    def puede_mover(self, old: Posicion, mov: Movimiento, neu: Posicion) -> bool:
+        """Verificar si el movimiento es válido (nombre en castellano)."""
         neu.x = old.x
         neu.y = old.y
 
         pos = Posicion(old.x + mov.dx, old.y + mov.dy)
-        if self.is_in_dish(pos):
+        if self.esta_en_plato(pos):
             if mov.dx > 0:
                 neu.x = old.x + 1
             elif mov.dx < 0:
@@ -221,10 +235,14 @@ class Petri:
             return True
         return False
 
-    def is_in_dish(self, pos: Posicion) -> bool:
-        """Verificar si una posición está dentro del plato de Petri"""
-        x, y, r = pos.x, pos.y, self.radius
+    # Eliminado alias `can_move`.
+
+    def esta_en_plato(self, pos: Posicion) -> bool:
+        """Verificar si una posición está dentro del plato de Petri (castellano)."""
+        x, y, r = pos.x, pos.y, self.radio
         return (r - x) * (r - x) + (r - y) * (r - y) < r * r
+
+    # Eliminado alias `is_in_dish`.
 
     def compite(self, old: Posicion, neu: Posicion) -> None:
         """Combate entre dos microorganismos"""
@@ -250,7 +268,7 @@ class Petri:
 
         # Si el perdedor queda con energía negativa, muere
         if agar.celdas[los.x][los.y].energia_mo <= 0:
-            self.kill_mo(los)
+            self.eliminar_mo(los)
 
     def mitosis(self, pos: Posicion) -> None:
         """Mitosis (división celular)"""
@@ -261,26 +279,28 @@ class Petri:
         place_found = False
         for dx, dy in directions:
             neu = Posicion(pos.x + dx, pos.y + dy)
-            if self.is_in_dish(neu):
+            if self.esta_en_plato(neu):
                 if agar.celdas[neu.x][neu.y].id_mo == VACIO:
                     place_found = True
                     ener1 = agar.celdas[pos.x][pos.y].energia_mo
                     ener = ener1 * 0.5 - ener1 * 0.01  # Mitad menos 1%
                     agar.celdas[pos.x][pos.y].energia_mo = ener  # Reducir energía del progenitor
-                    self.create_mo(neu, agar.celdas[pos.x][pos.y].id_mo, ener)
+                    self.crear_mo(neu, agar.celdas[pos.x][pos.y].id_mo, ener)
                     break
 
-    def create_mo(self, pos: Posicion, id: int, ener: float) -> None:
-        """Crear microorganismo"""
+    def crear_mo(self, pos: Posicion, id: int, ener: float) -> None:
+        """Crear microorganismo (nombre en castellano)."""
         agar.celdas[pos.x][pos.y].id_mo = id
         agar.celdas[pos.x][pos.y].energia_mo = ener
 
         # Notificar a la colonia
-        if id - 1 < len(self.colonies):
-            self.colonies[id - 1].create(pos.x, pos.y)
+        if id - 1 < len(self.colonias):
+            self.colonias[id - 1].crear(pos.x, pos.y)
 
-    def move_mo(self, old: Posicion, neu: Posicion) -> None:
-        """Mover microorganismo"""
+    # Eliminado alias `create_mo`.
+
+    def mover_mo(self, old: Posicion, neu: Posicion) -> None:
+        """Mover microorganismo (castellano)."""
         id_mo = agar.celdas[old.x][old.y].id_mo
 
         # Copiar a la nueva posición
@@ -292,11 +312,13 @@ class Petri:
         agar.celdas[old.x][old.y].energia_mo = 0.0
 
         # Notificar a la colonia
-        if id_mo - 1 < len(self.colonies):
-            self.colonies[id_mo - 1].move(old, neu)
+        if id_mo - 1 < len(self.colonias):
+            self.colonias[id_mo - 1].mover(old, neu)
 
-    def kill_mo(self, pos: Posicion) -> None:
-        """Eliminar microorganismo"""
+    # Eliminado alias `move_mo`.
+
+    def eliminar_mo(self, pos: Posicion) -> None:
+        """Eliminar microorganismo (castellano)."""
         id_mo = agar.celdas[pos.x][pos.y].id_mo
 
         # Vaciar la celda
@@ -304,28 +326,21 @@ class Petri:
         agar.celdas[pos.x][pos.y].energia_mo = 0.0
 
         # Notificar a la colonia
-        if id_mo - 1 < len(self.colonies):
-            self.colonies[id_mo - 1].kill(pos.x, pos.y)
+        if id_mo - 1 < len(self.colonias):
+            self.colonias[id_mo - 1].eliminar(pos.x, pos.y)
 
-    def add_colony(self, radius: int, selected_col: int) -> None:
-        """Agregar una colonia del tipo especificado"""
-        id_colony = len(self.colonies) + 1
+    # Eliminado alias `kill_mo`.
 
-        if selected_col in self.microorg_classes:
-            colony = Colony(self.microorg_classes[selected_col], id_colony, radius)
-            self.colonies.append(colony)
+    def agregar_colonia(self, radius: int, selected_col: int) -> None:
+        """Agregar una colonia del tipo especificado (castellano)."""
+        id_colony = len(self.colonias) + 1
+
+        if selected_col in self.clases_microorg:
+            colony = Colonia(self.clases_microorg[selected_col], id_colony, radius)
+            self.colonias.append(colony)
         else:
             print(f"Advertencia: Tipo de microorganismo {selected_col} no encontrado")
 
-    # -----------------------------
-    # Aliases para compatibilidad (nombres en inglés)
-    # Estos métodos existen para mantener compatibilidad con versiones
-    # anteriores que usan los nombres en inglés.
-    # Se colocan al final de la clase `Petri`.
-    def colony_name(self, id: int) -> str:
-        """Backward-compatibility alias for `nombre_colonia`."""
-        return self.nombre_colonia(id)
+    # Eliminado alias `add_colony`.
 
-    def author_name(self, id: int) -> str:
-        """Backward-compatibility alias for `autor_colonia`."""
-        return self.autor_colonia(id)
+    # Ya no hay aliases en inglés; usar `nombre_colonia` / `autor_colonia`.

@@ -70,9 +70,9 @@ alifec/
 │   ├── defs.py            # Constantes y definiciones
 │   ├── agar.py            # Entorno (plato de Petri)
 │   ├── microorg.py        # Clase base abstracta para microorganismos
-│   ├── colony.py          # Gestión de colonias
-│   ├── petri.py           # Motor principal de la simulación
-│   └── grapher.py         # Visualización (matplotlib)
+│   ├── colonia.py         # Gestión de colonias (API en castellano)
+│   ├── petri.py           # Motor principal de la simulación (API en castellano)
+│   └── grafica.py         # Visualización (matplotlib) — clase principal: `Graficadora`
 ├── mos/                   # Implementaciones de microorganismos
 │   ├── aleatorio.py       # Movimiento aleatorio
 │   ├── buscan.py          # Buscador de nutrientes

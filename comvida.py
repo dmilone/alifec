@@ -127,24 +127,24 @@ Ejemplos:
     
     # Ejecutar la simulación
     petri = None
-    grapher = None
+    graficadora = None
     try:
         # Crear cápsula de Petri con colonias seleccionadas
         petri = Petri(R, args.dist, args.colonies, microorg_classes)
 
-        # Definir el backend de matplotlib para el modo sin gráficos antes de importar Grafica
+        # Definir el backend de matplotlib para el modo sin gráficos antes de importar Graficadora
         if args.no_plot:
             import matplotlib
             matplotlib.use('Agg')
 
         # Crear y ejecutar visualización (modo headless --no-plot)
-        # Usar el módulo en castellano `grafica` (sin shim)
-        from lib.grafica import Grafica
-        grapher = Grafica(headless=args.no_plot)
-        grapher.create_windows(petri)
+        # Usar el módulo en castellano `grafica`
+        from lib.grafica import Graficadora
+        graficadora = Graficadora(headless=args.no_plot)
+        graficadora.crear_ventanas(petri)
 
         # Obtener datos de resultados de la competencia
-        contest_data = grapher.resultado_competencia()
+        contest_data = graficadora.resultado_competencia()
 
         # Solo guardar resultados si la competencia se completó bien
         if contest_data.get('completed', False):
@@ -165,9 +165,9 @@ Ejemplos:
         return 1
     finally:
         # Limpieza...
-        if grapher:
+        if 'graficadora' in locals() and graficadora:
             try:
-                grapher.cleanup()
+                graficadora.limpiar()
             except:
                 pass
         if petri:

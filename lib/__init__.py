@@ -6,9 +6,9 @@
 from .defs import *
 from .agar import *
 from .microorg import *
-from .colony import *
+from .colonia import *
 from .petri import *
-from .grapher import *
+from .grafica import *
 
 __version__ = "0.41-py"
 __author__ = "Diego Milone, Maximiliano Boscovich, Gaston Ramos (Python translation)"

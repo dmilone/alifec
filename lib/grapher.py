@@ -5,11 +5,11 @@ esperan `from lib.grapher import Grapher`. La implementación real
 se encuentra en `lib.grafica`.
 """
 
-from .grafica import Grafica
 
 # Exponer nombre histórico Grapher para compatibilidad
-class Grapher(Grafica):
-    pass
+raise ImportError(
+    "lib.grapher has been removed. Use 'from lib.grafica import Graficadora' and update callers accordingly."
+)
 
 # También dejar el nombre en español accesible directamente
 ColaGrafica = Grafica
