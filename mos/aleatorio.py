@@ -4,7 +4,7 @@
 # =====================================================================
 
 import random
-from lib.microorg import Microorganismo
+from lib.microorganismo import Microorganismo
 from lib.agar import Movimiento
 
 class Aleatorio(Microorganismo):

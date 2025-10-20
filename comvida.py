@@ -16,7 +16,7 @@ from typing import Dict, Type, List
 
 from lib.definiciones import *
 from lib.petri import Petri
-from lib.microorg import Microorganismo
+from lib.microorganismo import Microorganismo
 from lib.ranking import RankingSystem
 
 def get_microorganism_classes() -> Dict[int, Type[Microorganismo]]:

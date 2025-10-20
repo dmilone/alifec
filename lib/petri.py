@@ -9,7 +9,7 @@ from typing import List, Dict, Type, Tuple
 from .definiciones import *
 from .agar import Posicion, Movimiento, agar, Celda
 from .colonia import Colonia
-from .microorg import Microorganismo
+from .microorganismo import Microorganismo
 
 
 class Petri:

@@ -5,7 +5,7 @@
 
 from .definiciones import *
 from .agar import *
-from .microorg import *
+from .microorganismo import *
 from .colonia import *
 from .petri import *
 from .graficacion import *

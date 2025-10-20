@@ -5,7 +5,7 @@
 
 import random
 from typing import List, Tuple
-from lib.microorg import Microorganismo
+from lib.microorganismo import Microorganismo
 from lib.agar import Movimiento, agar, Posicion
 from lib.defs import VACIO
 
