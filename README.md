@@ -149,3 +149,47 @@ La simulación muestra:
 ## Enlaces
 - Repositorio GitHub: https://github.com/dmilone/alifec
 - Proyecto original: https://sourceforge.net/projects/alifecontest/
+
+## Política de nombres (actualización importante)
+
+Se cambió la convención de nombres internos para que los nombres 'verdaderos' de la API
+sean en castellano (p. ej. `nombre_colonia`, `autor_colonia`, `resultado_competencia`,
+`guardar_resultado_competencia`, `generar_ranking_diario`). Para mantener compatibilidad
+con versiones y scripts existentes, se colocaron aliases en inglés al final de las
+clases correspondientes (por ejemplo `colony_name`, `author_name`, `get_contest_result`,
+`save_contest_result`, `generate_daily_ranking`).
+
+Los alias en inglés delegan en las implementaciones en castellano y están documentados
+en el código con un comentario claro. Si sos usuario de versiones anteriores, tu código
+seguirá funcionando. Recomendamos migrar gradualmente a los nombres en castellano.
+
+----
+
+Texto sugerido para enviar por mail al equipo (copiar/pegar):
+
+Asunto: [alifec] Migración de nombres de API a castellano + aliases de compatibilidad
+
+Hola equipo,
+
+He actualizado las APIs públicas del proyecto para que los nombres principales estén
+en castellano. Esto incluye métodos como `nombre_colonia`, `autor_colonia`,
+`resultado_competencia`, `guardar_resultado_competencia` y `generar_ranking_diario`.
+
+Para no romper scripts existentes, he añadido aliases en inglés al final de las
+clases (por ejemplo `colony_name`, `author_name`, `get_contest_result`,
+`save_contest_result`, `generate_daily_ranking`). Los aliases delegan en las
+implementaciones en castellano y están claramente marcados en el código.
+
+Acciones realizadas:
+- Nombres principales en castellano aplicados al código y puntos de llamada internos.
+- Aliases en inglés añadidos al final de las clases para compatibilidad.
+- Se ejecutaron import-tests y simulaciones headless para verificar comportamiento.
+- Cambios push a la rama `main` del repositorio (sin branches intermedias).
+
+Recomendación:
+- Gradualmente reemplazar usos antiguos por los nuevos nombres en castellano.
+- Si quieren, preparo un pequeño script de búsqueda/replace y pruebas para acelerar
+    la migración en sus scripts.
+
+Saludos,
+[Tu nombre]
