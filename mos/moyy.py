@@ -19,7 +19,7 @@ class MOyy(Microorganismo):
     def autor(self) -> str:
         return "Compu2"
         
-    def move(self, mov: Movimiento) -> None:
+    def decidir_movimiento(self, mov: Movimiento) -> None:
         """Moverse hacia donde hay más alimento, pero sólo en la dirección y"""
         if agar.nutrientes(self.pos.x, self.pos.y - 1) > agar.nutrientes(self.pos.x, self.pos.y):
             mov.dy = -1
@@ -28,7 +28,7 @@ class MOyy(Microorganismo):
         else:
             mov.dy = 0
         mov.dx = 0
-        
-    def mitosis(self) -> bool:
+
+    def quiere_mitosis(self) -> bool:
         """Se reproduce si la energía > 500"""
         return self.ene > 500

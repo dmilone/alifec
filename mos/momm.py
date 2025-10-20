@@ -19,11 +19,11 @@ class MOmm(Microorganismo):
     def autor(self) -> str:
         return "Compu2"
         
-    def move(self, mov: Movimiento) -> None:
+    def decidir_movimiento(self, mov: Movimiento) -> None:
         """Siempre moverse en diagonal abajo-izquierda"""
         mov.dx = -1
         mov.dy = -1
-        
-    def mitosis(self) -> bool:
+
+    def quiere_mitosis(self) -> bool:
         """Comportamiento por defecto de mitosis"""
         return False

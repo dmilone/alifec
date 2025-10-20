@@ -1,0 +1,221 @@
+diff --git a/README.md b/README.md
+index ee9df64..4b39dbd 100644
+--- a/README.md
++++ b/README.md
+@@ -67,12 +67,12 @@ python comvida.py --dist 5 --colonies 6 7
+ ```
+ alifec/
+ ├── lib/                    # Clases principales de la simulación
+-│   ├── defs.py            # Constantes y definiciones
++│   ├── definiciones.py    # Constantes y definiciones (antes `defs.py`)
+ │   ├── agar.py            # Entorno (plato de Petri)
+-│   ├── microorg.py        # Clase base abstracta para microorganismos
++│   ├── microorganismo.py  # Clase base abstracta para microorganismos (API en castellano)
+ │   ├── colonia.py         # Gestión de colonias (API en castellano)
+ │   ├── petri.py           # Motor principal de la simulación (API en castellano)
+-│   └── grafica.py         # Visualización (matplotlib) — clase principal: `Graficadora`
++│   └── graficacion.py     # Visualización (matplotlib) — clase principal: `Graficadora`
+ ├── mos/                   # Implementaciones de microorganismos
+ │   ├── aleatorio.py       # Movimiento aleatorio
+ │   ├── buscan.py          # Buscador de nutrientes
+@@ -94,33 +94,37 @@ alifec/
+ 
+ 1. Crear un nuevo archivo Python en el directorio `mos/`
+ 2. Heredar de la clase `Microorganismo`
+-3. Implementar los métodos requeridos:
++3. Implementar los métodos requeridos (API en castellano preferida):
+    - `nombre()`: Devuelve el nombre del microorganismo
+-   - `autor()`: Devuelve el nombre del autor  
+-   - `move(mov)`: Define la estrategia de movimiento
+-   - `mitosis()`: Define la estrategia de reproducción
++   - `autor()`: Devuelve el nombre del autor
++   - `decidir_movimiento(mov)` o `move(mov)`: Define la estrategia de movimiento
++   - `quiere_mitosis()` o `mitosis()`: Define la estrategia de reproducción
+ 
+-Ejemplo:
++Ejemplo (recomendado, API en castellano):
+ ```python
+-from ..lib.microorg import Microorganismo
++from ..lib.microorganismo import Microorganismo
+ from ..lib.agar import Movimiento
+ 
+-class MyMicroorganism(Microorganismo):
++class MiMicroorganismo(Microorganismo):
+     def nombre(self) -> str:
+         return "Mi Organismo"
+         
+     def autor(self) -> str:
+         return "Tu Nombre"
+         
+-    def move(self, mov: Movimiento) -> None:
++    def decidir_movimiento(self, mov: Movimiento) -> None:
+         # Lógica de movimiento
+         mov.dx = 1  # Mover a la derecha
+         mov.dy = 0  # No moverse verticalmente
+         
+-    def mitosis(self) -> bool:
++    def quiere_mitosis(self) -> bool:
+         return self.ene > 1000  # Reproducir si la energía > 1000
+ ```
+ 
++Compatibilidad: el sistema mantiene compatibilidad con la API legacy en inglés
++(`move`/`mitosis`) — si tu microorganismo implementa esos nombres seguirá
++funcionando, pero se recomienda migrar a los nombres en castellano.
++
+ 4. El sistema detectará automáticamente el nuevo microorganismo
+ 
+ ## Reglas de la simulación
+diff --git a/lib/microorg.py b/lib/microorg.py
+deleted file mode 100644
+index cb03773..0000000
+--- a/lib/microorg.py
++++ /dev/null
+@@ -1,75 +0,0 @@
+-# =====================================================================
+-# MICROORGANISMO: Clase base abstracta para construir microorganismos
+-# Traducido desde C++ a Python
+-# =====================================================================
+-
+-from abc import ABC, abstractmethod
+-from .agar import Posicion, Movimiento
+-
+-class Microorganismo(ABC):
+-    """
+-    Esta es la clase abstracta para construir microorganismos.
+-    Para crear un nuevo microorganismo hay que heredar de esta clase.
+-
+-    No modificar esta clase directamente.
+-    @autor Diego (traducido a Python)
+-    """
+-    
+-    def __init__(self):
+-        self.id: int = 0          # identificador de la colonia
+-        self.pos: Posicion = None # posición actual: actualizada en cada paso de tiempo
+-        self.ene: float = 0.0     # energía actual: actualizada en cada paso de tiempo
+-        
+-    def nombre(self) -> str:
+-        """Devuelve el nombre del microorganismo."""
+-        return "microorganismo abstracto"
+-        
+-    def autor(self) -> str:
+-        """Devuelve el autor del microorganismo."""
+-        return "no sabe, no contesta"
+-        
+-    def update(self, i: int, p: Posicion, e: float) -> None:
+-        """
+-        Petri actualiza los atributos del microorganismo.
+-
+-        Args:
+-            i: identificador de la colonia
+-            p: posición absoluta del microorganismo
+-            e: energía actual del microorganismo
+-        """
+-        self.id = i
+-        self.pos = p
+-        self.ene = e
+-        
+-    @abstractmethod
+-    def move(self, mov: Movimiento) -> None:
+-        """
+-        El microorganismo decide la próxima posición mediante movimiento relativo.
+-
+-        Args:
+-            mov: movimiento relativo deseado por el microorganismo (modificado en sitio)
+-        """
+-        mov.dx = 0
+-        mov.dy = 0
+-        
+-    @abstractmethod
+-    def mitosis(self) -> bool:
+-        """
+-        El microorganismo decide si se duplica.
+-
+-        Returns:
+-            True si el microorganismo quiere duplicarse
+-        """
+-        return False
+-        
+-    # Método por compatibilidad hacia atrás (obsoleto)
+-    def mover(self, pos: Posicion, mov: Movimiento) -> None:
+-        """
+-        Compatibilidad hacia atrás: no usar este método, será ELIMINADO en la próxima versión.
+-
+-        Args:
+-            pos: posición absoluta del microorganismo
+-            mov: movimiento relativo deseado por el microorganismo (modificado en sitio)
+-        """
+-        mov.dx = 0
+-        mov.dy = 0
+\ No newline at end of file
+diff --git a/lib/microorganismo.py b/lib/microorganismo.py
+index 8027b65..067bb8c 100644
+--- a/lib/microorganismo.py
++++ b/lib/microorganismo.py
+@@ -42,25 +42,33 @@ class Microorganismo(ABC):
+         self.pos = p
+         self.ene = e
+ 
+-    @abstractmethod
+     def decidir_movimiento(self, mov: Movimiento) -> None:
+         """
+-        El microorganismo decide la próxima posición mediante movimiento relativo.
++        Método en castellano para decidir el movimiento.
+ 
+-        Args:
+-            mov: movimiento relativo deseado por el microorganismo (modificado en sitio)
++        Compatibilidad: si la subclase implementa el nombre legacy `move`, lo
++        llamamos automáticamente. Esto permite que los microorganismos
++        existentes (que implementan `move`) sigan funcionando.
+         """
++        # Si la subclase sobreescribe `move` (no el método base), llamarla
++        if getattr(self.__class__, 'move', None) is not None and self.__class__.move is not Microorganismo.move:
++            # Llamar a la implementación legacy del hijo
++            return self.__class__.move(self, mov)
++
++        # Comportamiento por defecto
+         mov.dx = 0
+         mov.dy = 0
+ 
+-    @abstractmethod
+     def quiere_mitosis(self) -> bool:
+         """
+-        El microorganismo decide si se duplica.
++        Método en castellano para decidir si se reproduce.
+ 
+-        Returns:
+-            True si el microorganismo quiere duplicarse
++        Compatibilidad: si la subclase implementa `mitosis` (nombre legacy),
++        la llamamos y devolvemos su resultado.
+         """
++        mit = getattr(self.__class__, 'mitosis', None)
++        if mit is not None and mit is not Microorganismo.mitosis:
++            return mit(self)
+         return False
+ 
+     # --- Aliases en inglés para compatibilidad (obsoletos) ---------------
+diff --git a/mos/tacticas1.py b/mos/tacticas1.py
+index e095b46..08a4d67 100644
+--- a/mos/tacticas1.py
++++ b/mos/tacticas1.py
+@@ -7,7 +7,7 @@ import random
+ from typing import List, Tuple
+ from lib.microorganismo import Microorganismo
+ from lib.agar import Movimiento, agar, Posicion
+-from lib.defs import VACIO
++from lib.definiciones import VACIO
+ 
+ class Tacticas1(Microorganismo):
+     """
+diff --git a/mos/tacticas2.py b/mos/tacticas2.py
+index 6e99956..f115845 100644
+--- a/mos/tacticas2.py
++++ b/mos/tacticas2.py
+@@ -7,7 +7,7 @@ import random
+ from typing import List, Tuple
+ from lib.microorganismo import Microorganismo
+ from lib.agar import Movimiento, agar, Posicion
+-from lib.defs import VACIO
++from lib.definiciones import VACIO
+ 
+ class Tacticas2(Microorganismo):
+     """

@@ -204,8 +204,8 @@ class RankingSystem:
         report.append(f"Total de colonias: {len(rankings)}")
         report.append("-" * 80)
         
-        # Header
-        report.append(f"{'Rank':<4} {'Colony':<20} {'W-L-D':<8} {'Win%':<6} {'Avg Pts':<8} {'Total Pts':<10}")
+        # Cabecera (en castellano)
+        report.append(f"{'Pos':<4} {'Colonia':<20} {'G-P-E':<8} {'%Vict':<6} {'Pts Med':<8} {'Pts Tot':<10}")
         report.append("-" * 80)
         
         # Rankings
@@ -225,13 +225,13 @@ class RankingSystem:
     
     def get_colony_stats(self, colony_name: str) -> Optional[Dict]:
         """
-        Get detailed statistics for a specific colony
-        
+        Obtener estadísticas detalladas de una colonia específica.
+
         Args:
-            colony_name: Name of the colony
-            
+            colony_name: Nombre de la colonia
+
         Returns:
-            Dictionary with colony statistics or None if not found
+            Diccionario con estadísticas de la colonia o None si no se encuentra
         """
         rankings = self.calculate_rankings()
         return rankings.get(colony_name)
@@ -362,8 +362,8 @@ class RankingSystem:
                 print("No se encontraron archivos de competencias para actualizar el ranking global.")
                 return 1
 
-            print(f"Loaded {files_loaded} contest file(s)")
-            print(f"Total contests: {len(self.contests)}")
+            print(f"Archivos cargados: {files_loaded}")
+            print(f"Total de competencias: {len(self.contests)}")
 
             # Generate comprehensive ranking report
             report = self.generate_ranking_report(top_n=50)  # Show more entries for global
@@ -427,8 +427,8 @@ def main():
         print(f"No se encontraron archivos de competencias que coincidan: competencias_{date_pattern}.yml")
         return
 
-    print(f"Loaded {files_loaded} contest file(s)")
-    print(f"Total contests: {len(ranking.contests)}")
+    print(f"Archivos cargados: {files_loaded}")
+    print(f"Total de competencias: {len(ranking.contests)}")
     print()
 
     # Generate and display ranking report

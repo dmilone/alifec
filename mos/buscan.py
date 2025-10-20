@@ -19,11 +19,11 @@ class BuscaN(Microorganismo):
     def autor(self) -> str:
         return "Compu2"
         
-    def move(self, mov: Movimiento) -> None:
+    def decidir_movimiento(self, mov: Movimiento) -> None:
         """Moverse a una de las 8 posiciones vecinas con más nutrientes"""
         x_max = 0
         y_max = 0
-        
+
         # Revisar las 8 posiciones vecinas
         for x_rel in range(-1, 2):
             for y_rel in range(-1, 2):
@@ -35,6 +35,6 @@ class BuscaN(Microorganismo):
         mov.dx = x_max
         mov.dy = y_max
         
-    def mitosis(self) -> bool:
+    def quiere_mitosis(self) -> bool:
         """Se reproduce si la energía > 5000"""
         return self.ene > 5000

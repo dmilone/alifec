@@ -20,11 +20,11 @@ class Aleatorio(Microorganismo):
     def autor(self) -> str:
         return "Compu2"
         
-    def move(self, mov: Movimiento) -> None:
+    def decidir_movimiento(self, mov: Movimiento) -> None:
         """Elegir aleatoriamente cualquiera de las 8 celdas vecinas"""
         mov.dx = random.randint(0, 2) - 1  # -1, 0 o 1
         mov.dy = random.randint(0, 2) - 1  # -1, 0 o 1
         
-    def mitosis(self) -> bool:
+    def quiere_mitosis(self) -> bool:
         """Se reproduce si la energía > 5000"""
         return self.ene > 5000

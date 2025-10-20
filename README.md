@@ -67,12 +67,12 @@ python comvida.py --dist 5 --colonies 6 7
 ```
 alifec/
 ├── lib/                    # Clases principales de la simulación
-│   ├── defs.py            # Constantes y definiciones
+│   ├── definiciones.py    # Constantes y definiciones (antes `defs.py`)
 │   ├── agar.py            # Entorno (plato de Petri)
-│   ├── microorg.py        # Clase base abstracta para microorganismos
+│   ├── microorganismo.py  # Clase base abstracta para microorganismos (API en castellano)
 │   ├── colonia.py         # Gestión de colonias (API en castellano)
 │   ├── petri.py           # Motor principal de la simulación (API en castellano)
-│   └── grafica.py         # Visualización (matplotlib) — clase principal: `Graficadora`
+│   └── graficacion.py     # Visualización (matplotlib) — clase principal: `Graficadora`
 ├── mos/                   # Implementaciones de microorganismos
 │   ├── aleatorio.py       # Movimiento aleatorio
 │   ├── buscan.py          # Buscador de nutrientes
@@ -93,33 +93,37 @@ alifec/
 ## Crear nuevos microorganismos
 
 1. Crear un nuevo archivo Python en el directorio `mos/`
-2. Heredar de la clase `Microorganismo`
-3. Implementar los métodos requeridos:
-   - `nombre()`: Devuelve el nombre del microorganismo
-   - `autor()`: Devuelve el nombre del autor  
-   - `move(mov)`: Define la estrategia de movimiento
-   - `mitosis()`: Define la estrategia de reproducción
+3. Heredar de la clase `Microorganismo`
+4. Implementar los métodos requeridos (API en castellano):
+    - `nombre()`: Devuelve el nombre del microorganismo
+    - `autor()`: Devuelve el nombre del autor
+    - `decidir_movimiento(mov)`: Define la estrategia de movimiento (obligatorio)
+    - `quiere_mitosis()`: Define la estrategia de reproducción (obligatorio)
 
-Ejemplo:
+Ejemplo (API en castellano):
 ```python
-from ..lib.microorg import Microorganismo
+from ..lib.microorganismo import Microorganismo
 from ..lib.agar import Movimiento
 
-class MyMicroorganism(Microorganismo):
+class MiMicroorganismo(Microorganismo):
     def nombre(self) -> str:
         return "Mi Organismo"
         
     def autor(self) -> str:
         return "Tu Nombre"
         
-    def move(self, mov: Movimiento) -> None:
+    def decidir_movimiento(self, mov: Movimiento) -> None:
         # Lógica de movimiento
         mov.dx = 1  # Mover a la derecha
         mov.dy = 0  # No moverse verticalmente
         
-    def mitosis(self) -> bool:
+    def quiere_mitosis(self) -> bool:
         return self.ene > 1000  # Reproducir si la energía > 1000
 ```
+
+Nota: desde esta versión la API pública de microorganismos es exclusivamente
+en castellano. Implementa `decidir_movimiento` y `quiere_mitosis` en tus
+microorganismos. Los nombres legacy en inglés han sido eliminados.
 
 4. El sistema detectará automáticamente el nuevo microorganismo
 

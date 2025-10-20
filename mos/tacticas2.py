@@ -7,7 +7,7 @@ import random
 from typing import List, Tuple
 from lib.microorganismo import Microorganismo
 from lib.agar import Movimiento, agar, Posicion
-from lib.defs import VACIO
+from lib.definiciones import VACIO
 
 class Tacticas2(Microorganismo):
     """
@@ -123,7 +123,7 @@ class Tacticas2(Microorganismo):
         mov_c = random.randint(0, 2) - 1
         return mov_f, mov_c
         
-    def move(self, mov: Movimiento) -> None:
+    def decidir_movimiento(self, mov: Movimiento) -> None:
         """Estrategia principal de movimiento - ESTRATEGIA 2: comer -> matar -> reproducir"""
         mov_f, mov_c = 0, 0
         
@@ -142,6 +142,6 @@ class Tacticas2(Microorganismo):
         mov.dx = mov_c
         mov.dy = mov_f
         
-    def mitosis(self) -> bool:
-        """Reproduce if energy > 500"""
+    def quiere_mitosis(self) -> bool:
+        """Se reproduce si la energía > 500"""
         return self.ene > 500

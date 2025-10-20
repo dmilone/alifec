@@ -3,16 +3,16 @@
 # Se mantiene compatibilidad exportando los nombres en inglés como alias
 # =====================================================================
 
-from abc import ABC, abstractmethod
+from abc import ABC
 from .agar import Posicion, Movimiento
+
 
 class Microorganismo(ABC):
     """
-    Esta es la clase abstracta para construir microorganismos.
-    Para crear un nuevo microorganismo hay que heredar de esta clase.
+    Clase base para construir microorganismos (API en castellano).
+    Los nuevos microorganismos deben implementar la API en castellano.
 
-    No modificar esta clase directamente.
-    @autor Diego (traducido a Python por Diego)
+    @autor Diego (traducido a Python)
     """
 
     def __init__(self):
@@ -20,7 +20,7 @@ class Microorganismo(ABC):
         self.pos: Posicion = None # posición actual: actualizada en cada paso de tiempo
         self.ene: float = 0.0     # energía actual: actualizada en cada paso de tiempo
 
-    # --- API en castellano (preferida) ---------------------------------
+    # --- API en castellano ---------------------------------------------
     def nombre(self) -> str:
         """Devuelve el nombre del microorganismo."""
         return "microorganismo abstracto"
@@ -42,54 +42,19 @@ class Microorganismo(ABC):
         self.pos = p
         self.ene = e
 
-    @abstractmethod
     def decidir_movimiento(self, mov: Movimiento) -> None:
         """
-        El microorganismo decide la próxima posición mediante movimiento relativo.
+        Método en castellano para decidir el movimiento.
 
-        Args:
-            mov: movimiento relativo deseado por el microorganismo (modificado en sitio)
+        Implementación por defecto: quedarse en sitio.
+        Sobrescribir en subclases para definir comportamiento.
         """
         mov.dx = 0
         mov.dy = 0
 
-    @abstractmethod
     def quiere_mitosis(self) -> bool:
         """
-        El microorganismo decide si se duplica.
-
-        Returns:
-            True si el microorganismo quiere duplicarse
+        Método en castellano para decidir si se reproduce.
+        Devolver True si desea duplicarse.
         """
         return False
-
-    # --- Aliases en inglés para compatibilidad (obsoletos) ---------------
-    # Mantener estos métodos aquí para que código existente no rompa de
-    # forma inmediata. Los nuevos microorganismos deberían implementar la
-    # API en castellano.
-    def update(self, i: int, p: Posicion, e: float) -> None:
-        """Alias obsoleto de `actualizar`."""
-        return self.actualizar(i, p, e)
-
-    def move(self, mov: Movimiento) -> None:
-        """Alias obsoleto de `decidir_movimiento`.
-
-        Nota: implementar `decidir_movimiento` en subclasses; el alias llama a ella.
-        """
-        return self.decidir_movimiento(mov)
-
-    def mitosis(self) -> bool:
-        """Alias obsoleto de `quiere_mitosis`."""
-        return self.quiere_mitosis()
-
-    # Método por compatibilidad hacia atrás (el antiguo `mover`)
-    def mover(self, pos: Posicion, mov: Movimiento) -> None:
-        """
-        Compatibilidad hacia atrás: no usar este método, será ELIMINADO en la próxima versión.
-
-        Args:
-            pos: posición absoluta del microorganismo
-            mov: movimiento relativo deseado por el microorganismo (modificado en sitio)
-        """
-        mov.dx = 0
-        mov.dy = 0

@@ -19,7 +19,7 @@ class MOxx(Microorganismo):
     def autor(self) -> str:
         return "Compu2"
         
-    def move(self, mov: Movimiento) -> None:
+    def decidir_movimiento(self, mov: Movimiento) -> None:
         """Moverse hacia donde hay más alimento, pero sólo en la dirección x"""
         if agar.nutrientes(self.pos.x - 1, self.pos.y) > agar.nutrientes(self.pos.x, self.pos.y):
             mov.dx = -1
@@ -28,7 +28,7 @@ class MOxx(Microorganismo):
         else:
             mov.dx = 0
         mov.dy = 0
-        
-    def mitosis(self) -> bool:
+
+    def quiere_mitosis(self) -> bool:
         """Se reproduce si la energía > 500"""
         return self.ene > 500

@@ -120,9 +120,12 @@ class Colonia:
             if self.mis_mos[xr_idx][yr_idx] is not None:
                 pos = Posicion(xr_idx, yr_idx)
                 mo = self.mis_mos[xr_idx][yr_idx]
-                mo.update(self.ident, pos, agar.energia(xr_idx, yr_idx))
-                mo.move(self.movimientos[xr_idx][yr_idx])
-                self.duplicaciones[xr_idx][yr_idx] = mo.mitosis()
+                # Actualizar estado del microorganismo usando la API en castellano
+                mo.actualizar(self.ident, pos, agar.energia(xr_idx, yr_idx))
+                # Pedir al microorganismo que decida su movimiento
+                mo.decidir_movimiento(self.movimientos[xr_idx][yr_idx])
+                # Consultar si quiere mitosis (reproducirse)
+                self.duplicaciones[xr_idx][yr_idx] = mo.quiere_mitosis()
             else:
                 self.movimientos[xr_idx][yr_idx].dx = 0
                 self.movimientos[xr_idx][yr_idx].dy = 0
