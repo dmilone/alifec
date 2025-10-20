@@ -1,6 +1,6 @@
 # =====================================================================
 # MOmm: mov minus minus
-# Translated from C++ to Python
+# Traducido de C++ a Python
 # =====================================================================
 
 from lib.microorg import Microorganismo
@@ -8,9 +8,9 @@ from lib.agar import Movimiento
 
 class MOmm(Microorganismo):
     """
-    Simple microorganism that always moves diagonally down-left
-    
-    @author Compu2 (translated to Python)
+    Microorganismo simple que siempre se mueve en diagonal abajo-izquierda
+
+    @autor Compu2 (traducido a Python)
     """
     
     def nombre(self) -> str:
@@ -20,10 +20,10 @@ class MOmm(Microorganismo):
         return "Compu2"
         
     def move(self, mov: Movimiento) -> None:
-        """Always move diagonally down-left"""
+        """Siempre moverse en diagonal abajo-izquierda"""
         mov.dx = -1
         mov.dy = -1
         
     def mitosis(self) -> bool:
-        """Default mitosis behavior"""
+        """Comportamiento por defecto de mitosis"""
         return False

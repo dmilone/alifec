@@ -1,6 +1,6 @@
 # =====================================================================
-# MICROORGANISMO: Abstract base class for building microorganisms
-# Translated from C++ to Python
+# MICROORGANISMO: Clase base abstracta para construir microorganismos
+# Traducido desde C++ a Python
 # =====================================================================
 
 from abc import ABC, abstractmethod
@@ -8,34 +8,34 @@ from .agar import Posicion, Movimiento
 
 class Microorganismo(ABC):
     """
-    This is the abstract class to build microorganisms.
-    To build a new microorganism you should always inherit from this class.
+    Esta es la clase abstracta para construir microorganismos.
+    Para crear un nuevo microorganismo hay que heredar de esta clase.
 
-    Don't modify this class!
-    @author Diego (translated to Python)
+    No modificar esta clase directamente.
+    @autor Diego (traducido a Python)
     """
     
     def __init__(self):
-        self.id: int = 0          # the colony identificator
-        self.pos: Posicion = None # actual position: updated with each time step
-        self.ene: float = 0.0     # actual energy: updated with each time step
+        self.id: int = 0          # identificador de la colonia
+        self.pos: Posicion = None # posición actual: actualizada en cada paso de tiempo
+        self.ene: float = 0.0     # energía actual: actualizada en cada paso de tiempo
         
     def nombre(self) -> str:
-        """Returns the name of the microorganism."""
+        """Devuelve el nombre del microorganismo."""
         return "microorganismo abstracto"
         
     def autor(self) -> str:
-        """Returns the author of the microorganism."""
+        """Devuelve el autor del microorganismo."""
         return "no sabe, no contesta"
         
     def update(self, i: int, p: Posicion, e: float) -> None:
         """
-        Petri updates the microorganism attributes
-        
+        Petri actualiza los atributos del microorganismo.
+
         Args:
-            i: the colony identifier
-            p: the absolute position of the microorganism
-            e: the actual energy of the microorganism
+            i: identificador de la colonia
+            p: posición absoluta del microorganismo
+            e: energía actual del microorganismo
         """
         self.id = i
         self.pos = p
@@ -44,10 +44,10 @@ class Microorganismo(ABC):
     @abstractmethod
     def move(self, mov: Movimiento) -> None:
         """
-        The microorganism decides the next position by relative movement
-        
+        El microorganismo decide la próxima posición mediante movimiento relativo.
+
         Args:
-            mov: the desired relative movement of the microorganism (modified in place)
+            mov: movimiento relativo deseado por el microorganismo (modificado en sitio)
         """
         mov.dx = 0
         mov.dy = 0
@@ -55,22 +55,21 @@ class Microorganismo(ABC):
     @abstractmethod
     def mitosis(self) -> bool:
         """
-        The microorganism decides its duplication.
-        
+        El microorganismo decide si se duplica.
+
         Returns:
-            True if the microorganism wants to duplicate itself
+            True si el microorganismo quiere duplicarse
         """
         return False
         
-    # Backward compatibility method (deprecated)
+    # Método por compatibilidad hacia atrás (obsoleto)
     def mover(self, pos: Posicion, mov: Movimiento) -> None:
         """
-        Backward compatibility!!! Please don't use this method, 
-        it will be REMOVED in the next release.
-        
+        Compatibilidad hacia atrás: no usar este método, será ELIMINADO en la próxima versión.
+
         Args:
-            pos: the absolute position of the microorganism
-            mov: the desired relative movement of the microorganism (modified in place)
+            pos: posición absoluta del microorganismo
+            mov: movimiento relativo deseado por el microorganismo (modificado en sitio)
         """
         mov.dx = 0
         mov.dy = 0

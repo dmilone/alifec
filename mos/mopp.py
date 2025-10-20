@@ -1,6 +1,6 @@
 # =====================================================================
 # MOpp: mov plus plus
-# Translated from C++ to Python
+# Traducido de C++ a Python
 # =====================================================================
 
 from lib.microorg import Microorganismo
@@ -8,9 +8,9 @@ from lib.agar import Movimiento
 
 class MOpp(Microorganismo):
     """
-    Simple microorganism that always moves diagonally up-right
-    
-    @author Compu2 (translated to Python)
+    Microorganismo simple que siempre se mueve en diagonal arriba-derecha
+
+    @autor Compu2 (traducido a Python)
     """
     
     def nombre(self) -> str:
@@ -20,10 +20,10 @@ class MOpp(Microorganismo):
         return "Compu2"
         
     def move(self, mov: Movimiento) -> None:
-        """Always move diagonally up-right"""
+        """Siempre moverse en diagonal arriba-derecha"""
         mov.dx = 1
         mov.dy = 1
         
     def mitosis(self) -> bool:
-        """Default mitosis behavior"""
+        """Comportamiento por defecto de mitosis"""
         return False

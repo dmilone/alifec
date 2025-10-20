@@ -1,6 +1,6 @@
 # =====================================================================
-# TACTICAS2: Set of tactics for strategic behaviors (Strategy 2)
-# Translated from C++ to Python
+# TACTICAS2: Conjunto de tácticas para comportamientos estratégicos (Estrategia 2)
+# Traducido de C++ a Python
 # =====================================================================
 
 import random
@@ -11,9 +11,9 @@ from lib.defs import VACIO
 
 class Tacticas2(Microorganismo):
     """
-    Strategic microorganism with different tactical priorities than Tacticas1
-    
-    @author Compu2 (translated to Python)
+    Microorganismo estratégico con prioridades tácticas diferentes a Tacticas1
+
+    @autor Compu2 (traducido a Python)
     """
     
     def __init__(self):
@@ -28,12 +28,12 @@ class Tacticas2(Microorganismo):
         return "Compu2"
         
     def donde_estoy(self, pos: Posicion) -> None:
-        """Set current position"""
+        """Establecer posición actual"""
         self.mi_f = pos.y
         self.mi_c = pos.x
         
     def ver_vecindario(self) -> Tuple[List[int], List[float], List[float]]:
-        """See neighborhood - returns ID_MO, energy, nutrients for 9 cells"""
+        """Ver vecindario - devuelve ID_MO, energía y nutrientes para 9 celdas"""
         id_mo = []
         energia = []
         nutriente = []
@@ -47,7 +47,7 @@ class Tacticas2(Microorganismo):
         return id_mo, energia, nutriente
         
     def num_vecino_a_movimiento(self, num: int) -> Tuple[int, int]:
-        """Convert neighbor number to relative coordinates"""
+        """Convertir número de vecino a coordenadas relativas"""
         moves = [
             (-1, -1), (-1, 0), (-1, 1),  # 0, 1, 2
             (0, -1),  (0, 0),  (0, 1),   # 3, 4, 5
@@ -58,7 +58,7 @@ class Tacticas2(Microorganismo):
         return (0, 0)
         
     def contar_vivos(self) -> Tuple[int, int]:
-        """Count alive organisms - own and others"""
+        """Contar organismos vivos - propios y de otros"""
         max_f = agar.max_y()
         max_c = agar.max_x()
         
@@ -75,7 +75,7 @@ class Tacticas2(Microorganismo):
         return propios, otros
         
     def matar(self, id_mo: List[int], energia: List[float]) -> Tuple[bool, int, int]:
-        """Try to kill - move to neighbor with less energy and different type"""
+        """Intentar matar - moverse al vecino con menos energía y distinto tipo"""
         mov_f, mov_c = 0, 0
         encontro = False
         
@@ -89,7 +89,7 @@ class Tacticas2(Microorganismo):
         return encontro, mov_f, mov_c
         
     def comer(self, id_mo: List[int], nutriente: List[float]) -> Tuple[bool, int, int]:
-        """Try to eat - go to place with more food"""
+        """Intentar comer - ir al lugar con más alimento"""
         mov_f, mov_c = 0, 0
         nutriente_max = 0.0
         encontro = False
@@ -103,7 +103,7 @@ class Tacticas2(Microorganismo):
         return encontro, mov_f, mov_c
         
     def reproducir(self, id_mo: List[int], energia: List[float]) -> Tuple[bool, int, int]:
-        """Try to reproduce - move towards same species with higher energy"""
+        """Intentar reproducirse - moverse hacia la misma especie con mayor energía"""
         mov_f, mov_c = 0, 0
         energia_max = 0.0
         encontro = False
@@ -118,19 +118,19 @@ class Tacticas2(Microorganismo):
         return encontro, mov_f, mov_c
         
     def azar(self) -> Tuple[int, int]:
-        """Random movement to any of the 8 neighboring cells"""
+        """Movimiento aleatorio a cualquiera de las 8 celdas vecinas"""
         mov_f = random.randint(0, 2) - 1
         mov_c = random.randint(0, 2) - 1
         return mov_f, mov_c
         
     def move(self, mov: Movimiento) -> None:
-        """Main movement strategy - STRATEGY 2: eat -> kill -> reproduce"""
+        """Estrategia principal de movimiento - ESTRATEGIA 2: comer -> matar -> reproducir"""
         mov_f, mov_c = 0, 0
         
         self.donde_estoy(self.pos)
         id_mo, energia, nutriente = self.ver_vecindario()
         
-        # STRATEGY 2 - better than strategy 1: comer -> matar -> reproducir
+    # ESTRATEGIA 2 - mejor que la 1: comer -> matar -> reproducir
         encontro, mov_f, mov_c = self.comer(id_mo, nutriente)
         if not encontro:
             encontro, mov_f, mov_c = self.matar(id_mo, energia)

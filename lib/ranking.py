@@ -1,6 +1,6 @@
 # =====================================================================
-# RANKING: Contest ranking system for artificial life tournaments
-# Processes contest results and generates rankings
+# RANKING: Sistema de ranking para la Competencia de vida artificial
+# Procesa resultados de la Competencia y genera rankings
 # =====================================================================
 
 import os
@@ -11,16 +11,16 @@ from collections import defaultdict
 
 class RankingSystem:
     """
-    Ranking system for processing contest results and generating rankings.
-    Processes timestamped YAML contest files and calculates standings.
+    Sistema de ranking para procesar resultados de la Competencia y generar rankings.
+    Procesa archivos YAML con marcas temporales y calcula las posiciones.
     """
     
     def __init__(self, results_dir: str = "results"):
         """
-        Initialize ranking system
-        
+        Inicializar el sistema de ranking
+
         Args:
-            results_dir: Directory containing contest result files
+            results_dir: Directorio que contiene los archivos de resultados de la Competencia
         """
         self.results_dir = results_dir
         self.contests = []
@@ -28,13 +28,13 @@ class RankingSystem:
         
     def load_contest_files(self, date_pattern: str = "*") -> int:
         """
-        Load contest files matching date pattern
-        
+        Cargar archivos de Competencia que coincidan con un patrón de fecha
+
         Args:
-            date_pattern: Date pattern for file matching (e.g., "241005" for specific date, "*" for all)
-            
+            date_pattern: Patrón de fecha para coincidencia de archivos (ej.: "241005" para una fecha, "*" para todo)
+
         Returns:
-            Number of contest files loaded
+            Número de archivos de Competencia cargados
         """
         self.contests = []
         
@@ -46,16 +46,16 @@ class RankingSystem:
             try:
                 self._parse_contest_file(filepath)
             except Exception as e:
-                print(f"Error loading {filepath}: {e}")
+                print(f"Error cargando {filepath}: {e}")
                 
         return len(contest_files)
     
     def _parse_contest_file(self, filepath: str) -> None:
         """
-        Parse a single contest file and extract results
-        
+        Analizar un archivo de Competencia y extraer resultados
+
         Args:
-            filepath: Path to contest YAML file
+            filepath: Ruta al archivo YAML de la Competencia
         """
         try:
             with open(filepath, 'r') as f:
@@ -110,14 +110,14 @@ class RankingSystem:
                     self.contests.append(contest)
                     
         except Exception as e:
-            print(f"Error parsing {filepath}: {e}")
+            print(f"Error analizando {filepath}: {e}")
     
     def calculate_rankings(self) -> Dict[str, Dict]:
         """
-        Calculate rankings based on loaded contests
-        
+        Calcular rankings basados en las Competencias cargadas
+
         Returns:
-            Dictionary with colony rankings and statistics
+            Diccionario con rankings y estadísticas por colonia
         """
         self.rankings = defaultdict(lambda: {
             'wins': 0,
@@ -163,18 +163,18 @@ class RankingSystem:
     
     def generate_ranking_report(self, top_n: int = 10) -> str:
         """
-        Generate a formatted ranking report
-        
+        Generar un informe de ranking formateado
+
         Args:
-            top_n: Number of top colonies to include
-            
+            top_n: Número de colonias principales a incluir
+
         Returns:
-            Formatted ranking report string
+            Cadena con el informe de ranking formateado
         """
         rankings = self.calculate_rankings()
         
         if not rankings:
-            return "No contest data available for ranking."
+            return "No hay datos de Competencias disponibles para generar ranking."
         
         # Sort by win rate, then by total points
         sorted_colonies = sorted(
@@ -185,11 +185,11 @@ class RankingSystem:
         
         report = []
         report.append("=" * 80)
-        report.append("ARTIFICIAL LIFE CONTEST - RANKING REPORT")
+        report.append("COMPETENCIA DE VIDA ARTIFICIAL - INFORME DE RANKING")
         report.append("=" * 80)
-        report.append(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        report.append(f"Total contests analyzed: {len(self.contests)}")
-        report.append(f"Total colonies: {len(rankings)}")
+        report.append(f"Generado: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        report.append(f"Total de Competencias analizadas: {len(self.contests)}")
+        report.append(f"Total de colonias: {len(rankings)}")
         report.append("-" * 80)
         
         # Header

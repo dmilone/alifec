@@ -1,37 +1,37 @@
 # =====================================================================
-# DEFS: general definitions for the contest
-# Translated from C++ to Python
+# DEFS: definiciones generales para el concurso
+# Traducido desde C++ a Python
 # =====================================================================
 
-# ID for an empty cell
+# ID para una celda vacía
 VACIO = 0
 
-# Number of MOs within each colony at start de simulatios
+# Cantidad inicial de MOs por colonia al iniciar la simulación
 MOS_INICIAL = 50
 
-# Relative maximum of the nutrient distribution
+# Máximo relativo de la distribución de nutrientes
 MAX_NUTRI = 5000.0
 
-# Initial MO energy
+# Energía inicial de cada MO
 E_INICIAL = 1000
 
-# The cost of living
+# Costo de vivir (energía por paso de tiempo)
 E_VIVIR = 5
 
-# The cost of each step
+# Costo por moverse
 E_MOVERSE = 10
 
-# Maximum number of colonies in this build
+# Número máximo de colonias soportadas por esta compilación
 MAX_COLS = 8
 
-# Actual number of colonies in this execution
+# Número de colonias en esta ejecución (actual)
 N_COL = 2
 
-# Petri dish radius
+# Radio del plato de Petri
 R = 25
 
-# Maximum FLOP allowed by colony movement
+# Límite de FLOP permitido por movimiento de colonias (no usado directamente)
 PROD_X_COL = 25e6
 
-# The total number of available nutrient distributions
+# Cantidad total de distribuciones de nutrientes disponibles
 MAX_DNUTRI = 6

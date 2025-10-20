@@ -1,6 +1,6 @@
 # =====================================================================
-# MOxx: Simple microorganism example
-# Translated from C++ to Python
+# MOxx: Ejemplo simple de microorganismo
+# Traducido de C++ a Python
 # =====================================================================
 
 from lib.microorg import Microorganismo
@@ -8,9 +8,9 @@ from lib.agar import Movimiento, agar
 
 class MOxx(Microorganismo):
     """
-    Microorganism that moves horizontally towards food
-    
-    @author Compu2 (translated to Python)
+    Microorganismo que se mueve horizontalmente hacia más comida
+
+    @autor Compu2 (traducido a Python)
     """
     
     def nombre(self) -> str:
@@ -20,7 +20,7 @@ class MOxx(Microorganismo):
         return "Compu2"
         
     def move(self, mov: Movimiento) -> None:
-        """Move towards where there is more food, but only in x direction"""
+        """Moverse hacia donde hay más alimento, pero sólo en la dirección x"""
         if agar.nutrientes(self.pos.x - 1, self.pos.y) > agar.nutrientes(self.pos.x, self.pos.y):
             mov.dx = -1
         elif agar.nutrientes(self.pos.x + 1, self.pos.y) > agar.nutrientes(self.pos.x, self.pos.y):
@@ -30,5 +30,5 @@ class MOxx(Microorganismo):
         mov.dy = 0
         
     def mitosis(self) -> bool:
-        """Reproduce if energy > 500"""
+        """Se reproduce si la energía > 500"""
         return self.ene > 500

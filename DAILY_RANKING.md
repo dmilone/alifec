@@ -1,59 +1,59 @@
-# Daily Ranking System Documentation
+# Documentación del sistema de rankings diarios
 
-## Overview
-The system now generates daily ranking files with simplified timestamps (YYMMDD format only) that get updated each time a new contest is added to the same day.
+## Resumen
+El sistema genera archivos de ranking diarios con marcas de tiempo simplificadas (formato YYMMDD) que se actualizan cada vez que se agrega un nuevo concurso en la misma fecha.
 
-## File Naming Convention
+## Convenciones de nombres de archivo
 
-### Contest Files
-- `contests_YYMMDD.yml` - Contains all contests for a specific date
-- Multiple contests on the same day append to the same file
+### Archivos de concursos
+- `contests_YYMMDD.yml` - Contiene todos los concursos de una fecha específica
+- Varios concursos del mismo día se agregan (append) al mismo archivo
 
-### Daily Ranking Files  
-- `ranking_YYMMDD.txt` - Daily ranking for specific date (YYMMDD format only)
-- **Updated automatically** each time a contest is added to that day
-- **Overwrites** the existing file for the same day
+### Archivos de ranking diario
+- `ranking_YYMMDD.txt` - Ranking diario para una fecha específica (formato YYMMDD)
+- **Se actualiza automáticamente** cada vez que se añade un concurso ese día
+- **Sobrescribe** el archivo existente del mismo día
 
-### Global Ranking Files
-- User-specified filename (e.g., `global_ranking.txt`)
-- **Saved in results directory**: `results/global_ranking.txt`
-- **Automatic backups**: Previous versions saved to `results/bkp/` with full timestamp
-- Contains comprehensive statistics from all contest files
-- Generated on-demand using `--update-global` option
+### Archivos de ranking global
+- Nombre definido por el usuario (por ejemplo, `global_ranking.txt`)
+- **Se guarda en**: `results/global_ranking.txt`
+- **Backups automáticos**: versiones anteriores se guardan en `results/bkp/` con marca de tiempo completa
+- Contiene estadísticas acumuladas de todos los archivos de concursos
+- Se genera bajo demanda con la opción `--update-global`
 
-## Workflow Example
+## Ejemplo de flujo de trabajo
 
-1. **Run First Contest of the Day:**
+1. **Ejecutar el primer concurso del día:**
    ```bash
    python comvida.py --dist 4 --colonies 0 1
    ```
-   - Creates: `results/contests_251005.yml`
-   - Creates: `results/ranking_251005.txt`
+   - Crea: `results/contests_251005.yml`
+   - Crea: `results/ranking_251005.txt`
 
-2. **Run Second Contest Same Day:**
-   ```bash  
+2. **Ejecutar un segundo concurso el mismo día:**
+   ```bash
    python comvida.py --dist 3 --colonies 2 4
    ```
-   - Appends to: `results/contests_251005.yml`
-   - **Updates**: `results/ranking_251005.txt` (overwrites with new stats)
+   - Agrega (append) a: `results/contests_251005.yml`
+   - **Actualiza**: `results/ranking_251005.txt` (sobrescribe con las nuevas estadísticas)
 
-3. **Generate Global Ranking:**
+3. **Generar ranking global:**
    ```bash
    python comvida.py --update-global global_ranking.txt
    ```
-   - Processes all `contests_*.yml` files
-   - Creates/updates: `results/global_ranking.txt`
+   - Procesa todos los archivos `contests_*.yml`
+   - Crea/actualiza: `results/global_ranking.txt`
 
-## File Structure Example
+## Ejemplo de estructura de archivos
 ```
 results/
-├── contests_251004.yml            # Yesterday's contests (Oct 4, 2025)
-├── contests_251005.yml            # Today's contests (Oct 5, 2025)
-├── ranking_251004.txt             # Yesterday's ranking
-├── ranking_251005.txt             # Today's ranking (updated with each contest)
-├── global_ranking.txt             # Global ranking (all-time)
-├── season1_rankings.txt           # Custom global ranking file
-└── bkp/                           # Backup directory
-    ├── global_ranking_251005_114710.txt    # Backup with full timestamp
-    └── season1_rankings_251005_114739.txt  # Backup of custom ranking
+├── contests_251004.yml            # Concursos de ayer (4 Oct 2025)
+├── contests_251005.yml            # Concursos de hoy (5 Oct 2025)
+├── ranking_251004.txt             # Ranking de ayer
+├── ranking_251005.txt             # Ranking de hoy (actualizado con cada concurso)
+├── global_ranking.txt             # Ranking global (todos los tiempos)
+├── season1_rankings.txt           # Archivo de ranking global personalizado
+└── bkp/                           # Directorio de backups
+    ├── global_ranking_251005_114710.txt    # Backup con marca de tiempo completa
+    └── season1_rankings_251005_114739.txt  # Backup de ranking personalizado
 ```

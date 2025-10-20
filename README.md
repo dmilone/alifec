@@ -1,150 +1,151 @@
-# Artificial Life Contest
+# Concurso de Vida Artificial
 
-The framework provides the main rules of the game, a visualization interface using matplotlib, and examples of elementary microorganisms. The central idea of this project is the development of the environment, while users develop their own microorganisms to compete for survival in a common environment. All created microorganisms must compete for survival in a common petri dish. The colony that dominates the others and accumulates the most living energy wins the tournament.
+El marco provee las reglas principales del juego, una interfaz de visualización con matplotlib y ejemplos de microorganismos elementales. La idea central es el desarrollo del entorno; los usuarios crean sus propios microorganismos para competir por la supervivencia en un mismo ambiente. Todas las criaturas compiten en un mismo plato de Petri. La colonia que domine a las demás y acumule más energía viviente gana el concurso.
 
 
-
-## Requirements
+## Requisitos
 
 - Python 3.7+
 - matplotlib
 - numpy
 
-### Option 1: Using conda (recommended)
+### Opción 1: Usando conda (recomendado)
 ```bash
 conda env create -f environment.yml
 conda activate alife
 ```
 
-### Option 2: Using pip
+### Opción 2: Usando pip
 ```bash
 pip install matplotlib numpy
 ```
 
-## Usage
+## Uso
 
-Run a simulation with two microorganism colonies:
+Ejecutar una simulación entre dos colonias de microorganismos:
 
 ```bash
 python comvida.py --dist 4 --colonies 0 1
 ```
 
-### Command line options
+### Opciones de línea de comandos
 
-- `--dist, -d`: Nutrient distribution pattern (1-6)
-  - 1: Inclined plane
-  - 2: Vertical bar
-  - 3: Ring
-  - 4: Lattice
-  - 5: Two gaussians
-  - 6: Famine (uniform)
+- `--dist, -d`: Patrón de distribución de nutrientes (1-6)
+  - 1: Plano inclinado
+  - 2: Barra vertical
+  - 3: Anillo
+  - 4: Lattice (rejilla)
+  - 5: Dos gaussianas
+  - 6: Hambruna (uniforme)
 
-- `--colonies, -c`: List of microorganism types to compete (space-separated numbers)
+- `--colonies, -c`: Lista de tipos de microorganismos a competir (números separados por espacios)
 
-### Simple examples of microorganisms
+### Ejemplos simples de microorganismos
 
-- **0: Aleatorio** - Random movement (by Compu2)
-- **1: BuscaN** - Nutrient seeker (by Compu2)
-- **2: MOmm** - Always moves diagonally down-left (by Compu2)
-- **3: MOpp** - Always moves diagonally up-right (by Compu2)
-- **4: MOxx** - Moves horizontally towards food (by Compu2)
-- **5: MOyy** - Moves vertically towards food (by Compu2)
-- **6: Tacticas1** - Strategic: kill→eat→reproduce (by Compu2)
-- **7: Tacticas2** - Strategic: eat→kill→reproduce (by Compu2)
+- **0: Aleatorio** - Movimiento aleatorio (por Compu2)
+- **1: BuscaN** - Buscador de nutrientes (por Compu2)
+- **2: MOmm** - Siempre se mueve en diagonal abajo-izquierda (por Compu2)
+- **3: MOpp** - Siempre se mueve en diagonal arriba-derecha (por Compu2)
+- **4: MOxx** - Se mueve horizontalmente hacia la comida (por Compu2)
+- **5: MOyy** - Se mueve verticalmente hacia la comida (por Compu2)
+- **6: Tacticas1** - Estratégico: matar→comer→reproducir (por Compu2)
+- **7: Tacticas2** - Estratégico: comer→matar→reproducir (por Compu2)
 
-## Contest examples
+## Ejemplos de competencia
 
 ```bash
-# Simple random vs nutrient-seeker
+# Aleatorio vs buscador de nutrientes
 python comvida.py --dist 1 --colonies 0 1
 
-# Strategic battle
+# Batalla estratégica
 python comvida.py --dist 5 --colonies 6 7
 
 ```
 
-## Project structure
+## Estructura del proyecto
 
 ```
 alifec/
-├── lib/                    # Core simulation classes
-│   ├── defs.py            # Constants and definitions
-│   ├── agar.py            # Petri dish environment
-│   ├── microorg.py        # Abstract microorganism base class
-│   ├── colony.py          # Colony management
-│   ├── petri.py           # Main simulation engine
-│   └── grapher.py         # Visualization (matplotlib)
-├── mos/                   # Microorganism implementations
-│   ├── aleatorio.py       # Random movement
-│   ├── buscan.py          # Nutrient seeker
-│   ├── momm.py            # Diagonal down-left
-│   ├── mopp.py            # Diagonal up-right
-│   ├── moxx.py            # Horizontal food seeker
-│   ├── moyy.py            # Vertical food seeker
-│   ├── tacticas1.py       # Strategic type 1
-│   └── tacticas2.py       # Strategic type 2
-├── results/               # Contest results and rankings
-│   ├── contests_YYMMDD.yml  # Daily contest results
-│   ├── ranking_YYMMDD.txt   # Daily rankings  
-│   ├── global_ranking.txt   # Global rankings
-│   └── bkp/                 # Ranking backups
-└── comvida.py            # Main program entry point
+├── lib/                    # Clases principales de la simulación
+│   ├── defs.py            # Constantes y definiciones
+│   ├── agar.py            # Entorno (plato de Petri)
+│   ├── microorg.py        # Clase base abstracta para microorganismos
+│   ├── colony.py          # Gestión de colonias
+│   ├── petri.py           # Motor principal de la simulación
+│   └── grapher.py         # Visualización (matplotlib)
+├── mos/                   # Implementaciones de microorganismos
+│   ├── aleatorio.py       # Movimiento aleatorio
+│   ├── buscan.py          # Buscador de nutrientes
+│   ├── momm.py            # Diagonales abajo-izquierda
+│   ├── mopp.py            # Diagonales arriba-derecha
+│   ├── moxx.py            # Buscador horizontal
+│   ├── moyy.py            # Buscador vertical
+│   ├── tacticas1.py       # Implementación estratégica 1
+│   └── tacticas2.py       # Implementación estratégica 2
+├── results/               # Resultados de concursos y rankings
+│   ├── contests_YYMMDD.yml  # Resultados diarios de concursos
+│   ├── ranking_YYMMDD.txt   # Rankings diarios
+│   ├── global_ranking.txt   # Ranking global
+│   └── bkp/                 # Backups de rankings
+└── comvida.py            # Punto de entrada principal
 ```
 
-## Creating new microorganisms
+## Crear nuevos microorganismos
 
-1. Create a new Python file in the `mos/` directory
-2. Inherit from `Microorganismo` class
-3. Implement required methods:
-   - `nombre()`: Return microorganism name
-   - `autor()`: Return author name  
-   - `move(mov)`: Define movement strategy
-   - `mitosis()`: Define reproduction strategy
+1. Crear un nuevo archivo Python en el directorio `mos/`
+2. Heredar de la clase `Microorganismo`
+3. Implementar los métodos requeridos:
+   - `nombre()`: Devuelve el nombre del microorganismo
+   - `autor()`: Devuelve el nombre del autor  
+   - `move(mov)`: Define la estrategia de movimiento
+   - `mitosis()`: Define la estrategia de reproducción
 
-Example:
+Ejemplo:
 ```python
 from ..lib.microorg import Microorganismo
 from ..lib.agar import Movimiento
 
 class MyMicroorganism(Microorganismo):
     def nombre(self) -> str:
-        return "My Organism"
+        return "Mi Organismo"
         
     def autor(self) -> str:
-        return "Your Name"
+        return "Tu Nombre"
         
     def move(self, mov: Movimiento) -> None:
-        # Your movement logic here
-        mov.dx = 1  # Move right
-        mov.dy = 0  # Don't move vertically
+        # Lógica de movimiento
+        mov.dx = 1  # Mover a la derecha
+        mov.dy = 0  # No moverse verticalmente
         
     def mitosis(self) -> bool:
-        return self.ene > 1000  # Reproduce if energy > 1000
+        return self.ene > 1000  # Reproducir si la energía > 1000
 ```
 
-4. The system will automatically discover the new microorganism
+4. El sistema detectará automáticamente el nuevo microorganismo
 
-## Simulation rules
+## Reglas de la simulación
 
-- Microorganisms start with initial energy
-- Each time step costs energy for living
-- Moving costs additional energy
-- Microorganisms can consume nutrients from their environment
-- Combat occurs when microorganisms occupy the same space
-- Reproduction (mitosis) is possible when energy is sufficient
-- The simulation continues until one colony dominates or time limit is reached
+- Los microorganismos comienzan con energía inicial
+- Cada paso de tiempo consume energía por vivir
+- Moverse consume energía adicional
+- Los microorganismos pueden consumir nutrientes del entorno
+- Ocurre combate cuando dos microorganismos ocupan el mismo casillero
+- La reproducción (mitosis) es posible cuando la energía es suficiente
+- La simulación continúa hasta que una colonia domina o se alcanza el tiempo límite
 
-## Visualization
+## Visualización
 
-The simulation displays:
-- **Left panel**: Petri dish with microorganisms (red/blue dots) and nutrients (background color)
-- **Right panel**: Real-time statistics showing energy levels and population counts over time
+La simulación muestra:
+- **Panel izquierdo**: Plato de Petri con microorganismos (puntos rojo/azul) y nutrientes (color de fondo)
+- **Panel derecho**: Estadísticas en tiempo real mostrando niveles de energía y recuento de poblaciones en el tiempo
 
-## Contest system
+## Sistema de concursos
 
-- **Dynamic Discovery**: Microorganisms are automatically discovered from the `mos/` folder
-- **Automatic Results**: Contest results are automatically saved to `results/contests_YYMMDD.yml`
-- **Daily Rankings**: Daily rankings are generated as `results/ranking_YYMMDD.txt`
-- **Global Rankings**: Use `--update-global filename.txt` to create comprehensive rankings
+- **Descubrimiento dinámico**: Los microorganismos se detectan automáticamente desde la carpeta `mos/`
+- **Resultados automáticos**: Los resultados se guardan en `results/contests_YYMMDD.yml`
+- **Rankings diarios**: Se generan como `results/ranking_YYMMDD.txt`
+- **Rankings globales**: Usar `--update-global filename.txt` para crear rankings globales
 
-
+## Enlaces
+- Repositorio GitHub: https://github.com/dmilone/alifec
+- Proyecto original: https://sourceforge.net/projects/alifecontest/

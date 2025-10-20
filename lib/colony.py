@@ -1,6 +1,6 @@
 # =====================================================================
-# COLONY: Each colony governs a group of microorganisms
-# Translated from C++ to Python
+# COLONY: Cada colonia gobierna un grupo de microorganismos
+# Traducido de C++ a Python
 # =====================================================================
 
 from typing import List, Type, Optional
@@ -10,10 +10,10 @@ from .microorg import Microorganismo
 
 class Colony:
     """
-    Colony class that manages a group of microorganisms of the same type.
-    
-    Don't modify this class!
-    @author Diego (translated to Python)
+    Clase Colony que gestiona un grupo de microorganismos del mismo tipo.
+
+    No modificar esta clase.
+    @autor Diego (traducido a Python)
     """
     
     def __init__(self, microorg_class: Type[Microorganismo], id: int, rad: int):
@@ -23,7 +23,7 @@ class Colony:
         self.max_y: int = 2 * rad
         self.microorg_class = microorg_class
         
-        # Initialize grids
+    # Inicializar rejillas
         self.my_mos: List[List[Optional[Microorganismo]]] = [[None for _ in range(self.max_y)] 
                                                              for _ in range(self.max_x)]
         self.movs: List[List[Movimiento]] = [[Movimiento(0, 0) for _ in range(self.max_y)] 
@@ -31,15 +31,15 @@ class Colony:
         self.dups: List[List[bool]] = [[False for _ in range(self.max_y)] 
                                        for _ in range(self.max_x)]
         
-        # Prototype MO for getting name and author
+    # Protótipo de MO para obtener nombre y autor
         self.proto_mo: Microorganismo = microorg_class()
         
-        # Random order arrays
+    # Arrays de orden aleatorio
         self.xr: List[int] = list(range(self.max_x))
         self.yr: List[int] = list(range(self.max_y))
         
     def __del__(self):
-        """Destructor to clean up microorganisms"""
+        """Destructor para limpiar microorganismos"""
         try:
             if hasattr(self, 'my_mos') and hasattr(self, 'max_x') and hasattr(self, 'max_y'):
                 for x in range(self.max_x):
@@ -54,32 +54,32 @@ class Colony:
             pass
         
     def n_alives(self) -> int:
-        """Returns the number of alive microorganisms"""
+        """Devuelve el número de microorganismos vivos"""
         return self.n_mo_alives
         
     def mov(self, x: int, y: int) -> Movimiento:
-        """Returns the movement that the MO at position x,y wants to make"""
+        """Devuelve el movimiento que el MO en la posición x,y desea realizar"""
         try:
             return self.movs[x][y]
         except IndexError:
             return Movimiento(0, 0)
         
     def moved(self, x: int, y: int) -> bool:
-        """Returns True if the MO tried to move"""
+        """Devuelve True si el MO intentó moverse"""
         try:
             return self.movs[x][y].dx != 0 or self.movs[x][y].dy != 0
         except IndexError:
             return False
         
     def duplicate(self, x: int, y: int) -> bool:
-        """Returns True if the MO tried to reproduce"""
+        """Devuelve True si el MO intentó reproducirse"""
         try:
             return self.dups[x][y]
         except IndexError:
             return False
         
     def kill(self, x: int, y: int) -> None:
-        """Eliminates a MO"""
+        """Elimina un MO"""
         try:
             if self.my_mos[x][y] is not None:
                 del self.my_mos[x][y]
@@ -92,7 +92,7 @@ class Colony:
             return
             
     def create(self, x: int, y: int) -> None:
-        """Creates a new MO"""
+        """Crea un nuevo MO"""
         try:
             if self.my_mos[x][y] is None:
                 self.my_mos[x][y] = self.microorg_class()
@@ -101,7 +101,7 @@ class Colony:
             return
             
     def move(self, old: Posicion, neu: Posicion) -> None:
-        """Moves a MO from one place to another"""
+        """Mueve un MO de una posición a otra"""
         try:
             self.my_mos[neu.x][neu.y] = self.my_mos[old.x][old.y]
             self.my_mos[old.x][old.y] = None
@@ -112,7 +112,7 @@ class Colony:
             return  # Skip invalid moves
         
     def live(self, x: int, y: int) -> None:
-        """Gives a MO the possibility to move"""
+        """Da al MO la posibilidad de actuar (moverse/mitosis)"""
         x %= self.max_x
         y %= self.max_y
         
@@ -140,9 +140,9 @@ class Colony:
             return
             
     def name(self) -> str:
-        """Returns the name of the microorganism type"""
+        """Devuelve el nombre del tipo de microorganismo"""
         return self.proto_mo.nombre()
         
     def author(self) -> str:
-        """Returns the author of the microorganism type"""
+        """Devuelve el autor del tipo de microorganismo"""
         return self.proto_mo.autor()

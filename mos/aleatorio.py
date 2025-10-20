@@ -1,6 +1,6 @@
 # =====================================================================
-# ALEATORIO: Simple example of microorganism (Escherichia Coli)
-# Translated from C++ to Python
+# ALEATORIO: Ejemplo simple de microorganismo (Escherichia Coli)
+# Traducido de C++ a Python
 # =====================================================================
 
 import random
@@ -9,9 +9,9 @@ from lib.agar import Movimiento
 
 class Aleatorio(Microorganismo):
     """
-    Random movement microorganism - simple example
-    
-    @author Compu2 (translated to Python)
+    Microorganismo de movimiento aleatorio - ejemplo simple
+
+    @autor Compu2 (traducido a Python)
     """
     
     def nombre(self) -> str:
@@ -21,10 +21,10 @@ class Aleatorio(Microorganismo):
         return "Compu2"
         
     def move(self, mov: Movimiento) -> None:
-        """Randomly choose any of the 8 neighboring cells"""
-        mov.dx = random.randint(0, 2) - 1  # -1, 0, or 1
-        mov.dy = random.randint(0, 2) - 1  # -1, 0, or 1
+        """Elegir aleatoriamente cualquiera de las 8 celdas vecinas"""
+        mov.dx = random.randint(0, 2) - 1  # -1, 0 o 1
+        mov.dy = random.randint(0, 2) - 1  # -1, 0 o 1
         
     def mitosis(self) -> bool:
-        """Reproduce if energy > 5000"""
+        """Se reproduce si la energía > 5000"""
         return self.ene > 5000

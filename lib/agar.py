@@ -1,6 +1,6 @@
 # =====================================================================
-# AGAR: Gelatinous substance used as a culture medium for microbiological work
-# Translated from C++ to Python
+# AGAR: Sustancia gelatinosa usada como medio de cultivo para trabajos microbiológicos
+# Traducido desde C++ a Python
 # =====================================================================
 
 from typing import List, Tuple
@@ -8,66 +8,65 @@ from dataclasses import dataclass
 
 @dataclass
 class Posicion:
-    """Absolute position of a microorganism"""
+    """Posición absoluta de un microorganismo"""
     x: int
     y: int
 
 @dataclass 
 class Movimiento:
-    """Relative movement of a microorganism"""
+    """Movimiento relativo de un microorganismo"""
     dx: int
     dy: int
 
 @dataclass
 class Celda:
-    """Cell containing microorganism and nutrient information"""
-    id_mo: int = 0           # microorganism identifier
-    energia_mo: float = 0.0  # energy of the microorganism
-    nutrientes: float = 0.0  # amount of nutrients in this position
+    """Celda que contiene información del microorganismo y de nutrientes"""
+    id_mo: int = 0           # identificador del microorganismo
+    energia_mo: float = 0.0  # energía del microorganismo
+    nutrientes: float = 0.0  # cantidad de nutrientes en esta posición
 
-# Type alias for the grid of cells
+# Alias de tipo para la grilla de celdas
 Celdas = List[List[Celda]]
 
 class Agar:
     """
-    Agar is a gelatinous substance chiefly used as a culture medium 
-    for microbiological work.
-    
-    Don't modify this class!
-    @author Diego (translated to Python)
+    Agar es una sustancia gelatinosa usada como medio de cultivo.
+
+    No modificar esta clase directamente.
+    @autor Diego (traducido a Python)
     """
     
     def __init__(self):
         self.mx_x: int = 0
         self.mx_y: int = 0
-        self.rx: int = 0  # relative movement of the nutrients
+        self.rx: int = 0  # desplazamiento relativo de los nutrientes
         self.ry: int = 0
-        self.dist_n: int = 0  # copy of the nutrient distribution
-        self.celdas: Celdas = []  # the information about MOs and nutrients
+        self.dist_n: int = 0  # copia de la distribución de nutrientes
+        self.celdas: Celdas = []  # información sobre MOs y nutrientes
         
     def max_x(self) -> int:
-        """Returns the width of the Agar"""
+        """Devuelve el ancho del Agar"""
         return self.mx_x
         
     def max_y(self) -> int:
-        """Returns the height of the Agar"""
+        """Devuelve la altura del Agar"""
         return self.mx_y
         
     def dist_nutri(self) -> int:
-        """Returns the actual nutrient distribution"""
+        """Devuelve la distribución de nutrientes actual"""
         return self.dist_n
         
     def ocupacion(self, x: int, y: int) -> int:
-        """Returns the identifier of the MO in position x,y"""
+        """Devuelve el identificador del MO en la posición x,y"""
         return self.celdas[x % self.mx_x][y % self.mx_y].id_mo
         
     def energia(self, x: int, y: int) -> float:
-        """Returns the vital energy of the MO in position x,y"""
+        """Devuelve la energía vital del MO en la posición x,y"""
         return self.celdas[x % self.mx_x][y % self.mx_y].energia_mo
         
     def nutrientes(self, x: int, y: int) -> float:
-        """Returns the total amount of nutrients in position x,y"""
+        """Devuelve la cantidad total de nutrientes en la posición x,y"""
         return self.celdas[(x + self.rx) % self.mx_x][(y + self.ry) % self.mx_y].nutrientes
 
-# This instance is the interface to supply information to the MOs
+# Esta instancia es la interfaz para proveer información a los MOs
 agar = Agar()

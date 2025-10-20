@@ -1,6 +1,6 @@
 # =====================================================================
-# MOyy: Simple microorganism example
-# Translated from C++ to Python
+# MOyy: Ejemplo simple de microorganismo
+# Traducido de C++ a Python
 # =====================================================================
 
 from lib.microorg import Microorganismo
@@ -8,9 +8,9 @@ from lib.agar import Movimiento, agar
 
 class MOyy(Microorganismo):
     """
-    Microorganism that moves vertically towards food
-    
-    @author Compu2 (translated to Python)
+    Microorganismo que se mueve verticalmente hacia más comida
+
+    @autor Compu2 (traducido a Python)
     """
     
     def nombre(self) -> str:
@@ -20,7 +20,7 @@ class MOyy(Microorganismo):
         return "Compu2"
         
     def move(self, mov: Movimiento) -> None:
-        """Move towards where there is more food, but only in y direction"""
+        """Moverse hacia donde hay más alimento, pero sólo en la dirección y"""
         if agar.nutrientes(self.pos.x, self.pos.y - 1) > agar.nutrientes(self.pos.x, self.pos.y):
             mov.dy = -1
         elif agar.nutrientes(self.pos.x, self.pos.y + 1) > agar.nutrientes(self.pos.x, self.pos.y):
@@ -30,5 +30,5 @@ class MOyy(Microorganismo):
         mov.dx = 0
         
     def mitosis(self) -> bool:
-        """Reproduce if energy > 500"""
+        """Se reproduce si la energía > 500"""
         return self.ene > 500

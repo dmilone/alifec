@@ -1,6 +1,6 @@
 # =====================================================================
-# BUSCAN: Simple microorganism example (searches for nutrients)
-# Translated from C++ to Python
+# BUSCAN: Ejemplo simple de microorganismo (busca nutrientes)
+# Traducido de C++ a Python
 # =====================================================================
 
 from lib.microorg import Microorganismo
@@ -8,9 +8,9 @@ from lib.agar import Movimiento, agar
 
 class BuscaN(Microorganismo):
     """
-    Nutrient-seeking microorganism - moves towards highest nutrient concentration
-    
-    @author Compu2 (translated to Python)
+    Microorganismo buscador de nutrientes - se mueve hacia la mayor concentración de nutrientes
+
+    @autor Compu2 (traducido a Python)
     """
     
     def nombre(self) -> str:
@@ -20,11 +20,11 @@ class BuscaN(Microorganismo):
         return "Compu2"
         
     def move(self, mov: Movimiento) -> None:
-        """Move to one of the 8 neighboring positions with most food"""
+        """Moverse a una de las 8 posiciones vecinas con más nutrientes"""
         x_max = 0
         y_max = 0
         
-        # Check all 8 neighboring positions
+        # Revisar las 8 posiciones vecinas
         for x_rel in range(-1, 2):
             for y_rel in range(-1, 2):
                 if (agar.nutrientes(self.pos.x + x_rel, self.pos.y + y_rel) > 
@@ -36,5 +36,5 @@ class BuscaN(Microorganismo):
         mov.dy = y_max
         
     def mitosis(self) -> bool:
-        """Reproduce if energy > 5000"""
+        """Se reproduce si la energía > 5000"""
         return self.ene > 5000
