@@ -1,6 +1,5 @@
 # =====================================================================
-# PETRI: Simulación de un plato de Petri para Competencias de vida artificial
-# Traducido desde C++ a Python
+# PETRI: Simulación de una cápsula de Petri
 # =====================================================================
 
 import random
@@ -15,11 +14,11 @@ from .microorg import Microorganismo
 
 class Petri:
     """
-    Un plato de Petri es un recipiente poco profundo que los biólogos usan
+    Una cápsula de Petri es un recipiente poco profundo que los biólogos usan
     para cultivar células (bacterianas, animales, vegetales o fúngicas).
 
     No modificar esta clase directamente.
-    @autor Diego (traducido a Python)
+    @autor Diego (traducido a Python también por Diego)
     """
 
     def __init__(self, radius: int, dist: int, selected_cols: List[int], microorg_classes: Dict[int, Type[Microorganismo]]):
@@ -76,7 +75,7 @@ class Petri:
 
         for x in range(self.max_x):
             for y in range(self.max_y):
-                nutrient_value = self.calculate_nutrients(x, y, dist)
+                nutrient_value = self.calcular_nutrientes(x, y, dist)
                 agar.celdas[x][y].nutrientes = nutrient_value
                 total_nutri += nutrient_value
 
@@ -88,10 +87,8 @@ class Petri:
         self.dx = random.randint(-1, 1)
         self.dy = random.randint(-1, 1)
 
-    # Ya no exponemos aliases en inglés; solo nombres en castellano.
-
-    def calculate_nutrients(self, x: int, y: int, dist: int) -> float:
-        """Calcula la cantidad de nutrientes según el tipo de distribución"""
+    def calcular_nutrientes(self, x: int, y: int, dist: int) -> float:
+        """Calcula la cantidad de nutrientes según el tipo de distribución (castellano)."""
         max_x, max_y = self.max_x, self.max_y
 
         if dist == 1:  # Plano inclinado
@@ -194,11 +191,11 @@ class Petri:
                         if self.colonias[c].movio(x, y):
                             neu = Posicion(0, 0)
                             if self.puede_mover(old, self.colonias[c].movimiento(x, y), neu):
-                                if agar.celdas[neu.x][neu.y].id_mo == VACIO:
-                                    self.mover_mo(old, neu)
-                                else:
-                                    if agar.celdas[neu.x][neu.y].id_mo != id_mo:
-                                        self.compite(old, neu)
+                                        if agar.celdas[neu.x][neu.y].id_mo == VACIO:
+                                            self.mover_mo(old, neu)
+                                        else:
+                                            if agar.celdas[neu.x][neu.y].id_mo != id_mo:
+                                                self.competir(old, neu)
 
         # Mover nutrientes
         if self.tiempo % 10 < 5:
@@ -235,17 +232,13 @@ class Petri:
             return True
         return False
 
-    # Eliminado alias `can_move`.
-
     def esta_en_plato(self, pos: Posicion) -> bool:
         """Verificar si una posición está dentro del plato de Petri (castellano)."""
         x, y, r = pos.x, pos.y, self.radio
         return (r - x) * (r - x) + (r - y) * (r - y) < r * r
 
-    # Eliminado alias `is_in_dish`.
-
-    def compite(self, old: Posicion, neu: Posicion) -> None:
-        """Combate entre dos microorganismos"""
+    def competir(self, old: Posicion, neu: Posicion) -> None:
+        """Combate entre dos microorganismos (nombre en castellano)."""
         ener1 = agar.celdas[old.x][old.y].energia_mo
         ener2 = agar.celdas[neu.x][neu.y].energia_mo
 
@@ -297,8 +290,6 @@ class Petri:
         if id - 1 < len(self.colonias):
             self.colonias[id - 1].crear(pos.x, pos.y)
 
-    # Eliminado alias `create_mo`.
-
     def mover_mo(self, old: Posicion, neu: Posicion) -> None:
         """Mover microorganismo (castellano)."""
         id_mo = agar.celdas[old.x][old.y].id_mo
@@ -315,8 +306,6 @@ class Petri:
         if id_mo - 1 < len(self.colonias):
             self.colonias[id_mo - 1].mover(old, neu)
 
-    # Eliminado alias `move_mo`.
-
     def eliminar_mo(self, pos: Posicion) -> None:
         """Eliminar microorganismo (castellano)."""
         id_mo = agar.celdas[pos.x][pos.y].id_mo
@@ -329,8 +318,6 @@ class Petri:
         if id_mo - 1 < len(self.colonias):
             self.colonias[id_mo - 1].eliminar(pos.x, pos.y)
 
-    # Eliminado alias `kill_mo`.
-
     def agregar_colonia(self, radius: int, selected_col: int) -> None:
         """Agregar una colonia del tipo especificado (castellano)."""
         id_colony = len(self.colonias) + 1
@@ -340,7 +327,3 @@ class Petri:
             self.colonias.append(colony)
         else:
             print(f"Advertencia: Tipo de microorganismo {selected_col} no encontrado")
-
-    # Eliminado alias `add_colony`.
-
-    # Ya no hay aliases en inglés; usar `nombre_colonia` / `autor_colonia`.

@@ -1,6 +1,5 @@
 # =====================================================================
 # GRAFICA: Sistema de visualización para la Competencia de vida artificial
-# Archivo principal con nombres en castellano (Grafica)
 # =====================================================================
 
 import matplotlib.pyplot as plt
@@ -237,19 +236,20 @@ class Graficadora:
         else:
             ganador = "Empate"
             puntos_ganador = 0
+        # Devolver resultados con claves en castellano. Los consumidores pueden
+        # traducir a los nombres esperados por el sistema de ranking si es necesario.
         return {
-            'vs': f'{self.nombre_col1} vs {self.nombre_col2}',
-            'winner': ganador,
-            'points': puntos_ganador,
-            'col1_name': self.nombre_col1,
-            'col2_name': self.nombre_col2,
-            'col1_final_pop': self.col1_vivos,
-            'col2_final_pop': self.col2_vivos,
-            'col1_final_energy': self.col1_energia,
-            'col2_final_energy': self.col2_energia,
-            'duration': self.t,
+            'enfrentamiento': f'{self.nombre_col1} vs {self.nombre_col2}',
+            'ganador': ganador,
+            'puntos': puntos_ganador,
+            'col1_nombre': self.nombre_col1,
+            'col2_nombre': self.nombre_col2,
+            'col1_poblacion_final': self.col1_vivos,
+            'col2_poblacion_final': self.col2_vivos,
+            'col1_energia_final': self.col1_energia,
+            'col2_energia_final': self.col2_energia,
+            'duracion': self.t,
             'timestamp': datetime.now().isoformat(),
-            'completed': self.competencia_completada
+            'completada': self.competencia_completada
         }
 
-    # Nota: ya no se mantienen aliases en inglés ni alias `Grafica`.

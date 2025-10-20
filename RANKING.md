@@ -1,3 +1,4 @@
+````markdown
 # Documentación del sistema de rankings diarios
 
 ## Resumen
@@ -13,7 +14,6 @@ El sistema genera archivos de ranking diarios con marcas de tiempo simplificadas
 - `ranking_YYMMDD.txt` - Ranking diario para una fecha específica (formato YYMMDD)
 - **Se actualiza automáticamente** cada vez que se añade un concurso ese día
 - **Sobrescribe** el archivo existente del mismo día
-- `RANKING.md` - Archivo constante con el ranking diario actual (se sobrescribe en cada actualización)
 
 ### Archivos de ranking global
 - Nombre definido por el usuario (por ejemplo, `global_ranking.txt`)
@@ -58,3 +58,5 @@ resultados/
    ├── global_ranking_251005_114710.txt    # Backup con marca de tiempo completa
    └── season1_rankings_251005_114739.txt  # Backup de ranking personalizado
 ```
+
+````

@@ -1,5 +1,5 @@
 # =====================================================================
-# DEFS: definiciones generales para el concurso
+# DEFS: definiciones generales para la competencia
 # Traducido desde C++ a Python
 # =====================================================================
 

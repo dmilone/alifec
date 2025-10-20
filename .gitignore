@@ -72,9 +72,9 @@ ehthumbs.db
 Thumbs.db
 
 # Project specific
-results/*.yml
-results/*.txt
-results/bkp/
+resultados/*.yml
+resultados/*.txt
+resultados/bkp/
 *.log
 *.err
 test_*.txt

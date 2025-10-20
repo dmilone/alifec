@@ -146,9 +146,9 @@ Ejemplos:
         # Obtener datos de resultados de la competencia
         contest_data = graficadora.resultado_competencia()
 
-        # Solo guardar resultados si la competencia se completó bien
-        if contest_data.get('completed', False):
-            # Guardar resultado de la Competencia y generar ranking
+        # Ahora el sistema de ranking acepta claves en castellano, así que
+        # pasamos el diccionario tal cual.
+        if contest_data.get('completada', False):
             ranking_system = RankingSystem()
             ranking_system.guardar_resultado_competencia(contest_data)
             ranking_system.generar_ranking_diario()

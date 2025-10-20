@@ -82,11 +82,11 @@ alifec/
 │   ├── moyy.py            # Buscador vertical
 │   ├── tacticas1.py       # Implementación estratégica 1
 │   └── tacticas2.py       # Implementación estratégica 2
-├── results/               # Resultados de concursos y rankings
-│   ├── contests_YYMMDD.yml  # Resultados diarios de concursos
-│   ├── ranking_YYMMDD.txt   # Rankings diarios
-│   ├── global_ranking.txt   # Ranking global
-│   └── bkp/                 # Backups de rankings
+├── resultados/            # Resultados de concursos y rankings
+│   ├── competencias_YYMMDD.yml  # Resultados diarios de concursos
+│   ├── ranking_YYMMDD.txt       # Rankings diarios
+│   ├── global_ranking.txt       # Ranking global
+│   └── bkp/                     # Backups de rankings
 └── comvida.py            # Punto de entrada principal
 ```
 
@@ -142,8 +142,8 @@ La simulación muestra:
 ## Sistema de concursos
 
 - **Descubrimiento dinámico**: Los microorganismos se detectan automáticamente desde la carpeta `mos/`
-- **Resultados automáticos**: Los resultados se guardan en `results/contests_YYMMDD.yml`
-- **Rankings diarios**: Se generan como `results/ranking_YYMMDD.txt`
+- **Resultados automáticos**: Los resultados se guardan en `resultados/competencias_YYMMDD.yml`
+ - **Rankings diarios**: Se generan como `resultados/ranking_YYMMDD.txt`.
 - **Rankings globales**: Usar `--update-global filename.txt` para crear rankings globales
 
 ## Enlaces

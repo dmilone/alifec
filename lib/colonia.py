@@ -1,6 +1,5 @@
 """
-COLONIA: Gestión de una colonia de microorganismos
-Versión con nombres en castellano (Colonia)
+COLONIA: una colonia de microorganismos del mismo tipo
 """
 from typing import List, Type, Optional
 from .defs import *
@@ -9,9 +8,7 @@ from .microorg import Microorganismo
 
 
 class Colonia:
-    """Gestiona un grupo de microorganismos del mismo tipo.
-
-    Todos los identificadores públicos y privados están en castellano.
+    """ Un grupo de microorganismos del mismo tipo.
     """
 
     def __init__(self, microorg_class: Type[Microorganismo], ident: int, rad: int):
