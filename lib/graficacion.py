@@ -1,5 +1,6 @@
 # =====================================================================
 # GRAFICA: Sistema de visualización para la Competencia de vida artificial
+# Renombrado a `graficacion.py` y adaptado para usar `definiciones`.
 # =====================================================================
 
 import matplotlib.pyplot as plt
@@ -9,12 +10,12 @@ from typing import Optional
 import time
 import os
 from datetime import datetime
-from .defs import *
+from .definiciones import *
 from .agar import agar
 
 class Graficadora:
     """
-    Clase Graficador para visualizar la simulación de vida artificial.
+    Clase Graficadora para visualizar la simulación de vida artificial.
     """
 
     def __init__(self, headless=False):

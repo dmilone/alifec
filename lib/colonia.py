@@ -2,7 +2,7 @@
 COLONIA: una colonia de microorganismos del mismo tipo
 """
 from typing import List, Type, Optional
-from .defs import *
+from .definiciones import *
 from .agar import Posicion, Movimiento, agar
 from .microorg import Microorganismo
 

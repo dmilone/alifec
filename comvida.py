@@ -14,7 +14,7 @@ import importlib
 import inspect
 from typing import Dict, Type, List
 
-from lib.defs import *
+from lib.definiciones import *
 from lib.petri import Petri
 from lib.microorg import Microorganismo
 from lib.ranking import RankingSystem
@@ -139,7 +139,7 @@ Ejemplos:
 
         # Crear y ejecutar visualización (modo headless --no-plot)
         # Usar el módulo en castellano `grafica`
-        from lib.grafica import Graficadora
+        from lib.graficacion import Graficadora
         graficadora = Graficadora(headless=args.no_plot)
         graficadora.crear_ventanas(petri)
 

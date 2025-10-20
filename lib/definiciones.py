@@ -1,7 +1,6 @@
-# =====================================================================
-# DEFS: definiciones generales para la competencia
-# Traducido desde C++ a Python
-# =====================================================================
+"""
+DEFINICIONES: renombrado de `defs.py` a `definiciones.py` (compatibilidad)
+"""
 
 # ID para una celda vacía
 VACIO = 0

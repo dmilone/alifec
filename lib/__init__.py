@@ -3,12 +3,12 @@
 # Translated from C++ to Python
 # =====================================================================
 
-from .defs import *
+from .definiciones import *
 from .agar import *
 from .microorg import *
 from .colonia import *
 from .petri import *
-from .grafica import *
+from .graficacion import *
 
 __version__ = "0.41-py"
 __author__ = "Diego Milone, Maximiliano Boscovich, Gaston Ramos (Python translation)"

@@ -6,7 +6,7 @@ import random
 import math
 import time
 from typing import List, Dict, Type, Tuple
-from .defs import *
+from .definiciones import *
 from .agar import Posicion, Movimiento, agar, Celda
 from .colonia import Colonia
 from .microorg import Microorganismo

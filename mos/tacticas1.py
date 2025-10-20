@@ -11,7 +11,7 @@ from lib.defs import VACIO
 
 class Tacticas1(Microorganismo):
     """
-    Microorganismo estratégico con múltiples comportamientos tácticos
+    Microorganismo con múltiples comportamientos tácticos
 
     @autor Compu2 (traducido a Python)
     """
