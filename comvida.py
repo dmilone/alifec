@@ -132,14 +132,15 @@ Ejemplos:
         # Crear cápsula de Petri con colonias seleccionadas
         petri = Petri(R, args.dist, args.colonies, microorg_classes)
 
-        # Definir el backend de matplotlib para el modo sin gráficos antes de importar Grapher
+        # Definir el backend de matplotlib para el modo sin gráficos antes de importar Grafica
         if args.no_plot:
             import matplotlib
             matplotlib.use('Agg')
 
         # Crear y ejecutar visualización (modo headless --no-plot)
-        from lib.grapher import Grapher
-        grapher = Grapher(headless=args.no_plot)
+        # Usar el módulo en castellano `grafica` (sin shim)
+        from lib.grafica import Grafica
+        grapher = Grafica(headless=args.no_plot)
         grapher.create_windows(petri)
 
         # Obtener datos de resultados de la competencia
