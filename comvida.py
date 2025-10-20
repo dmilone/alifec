@@ -143,14 +143,14 @@ Ejemplos:
         grapher.create_windows(petri)
 
         # Obtener datos de resultados de la competencia
-        contest_data = grapher.get_contest_result()
+        contest_data = grapher.resultado_competencia()
 
         # Solo guardar resultados si la competencia se completó bien
         if contest_data.get('completed', False):
-            # Guardar resultado de la competencia y generar ranking
+            # Guardar resultado de la Competencia y generar ranking
             ranking_system = RankingSystem()
-            ranking_system.save_contest_result(contest_data)
-            ranking_system.generate_daily_ranking()
+            ranking_system.guardar_resultado_competencia(contest_data)
+            ranking_system.generar_ranking_diario()
         else:
             print("La competencia no se completó bien - resultados no guardados")
 

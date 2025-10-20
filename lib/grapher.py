@@ -68,11 +68,11 @@ class Grapher:
         
     # Obtener nombres y autores de las colonias
         if len(self.petri.colonies) >= 1:
-            self.cyname1 = self.petri.colony_name(1)
-            self.author1 = self.petri.author_name(1)
+            self.cyname1 = self.petri.nombre_colonia(1)
+            self.author1 = self.petri.autor_colonia(1)
         if len(self.petri.colonies) >= 2:
-            self.cyname2 = self.petri.colony_name(2)
-            self.author2 = self.petri.author_name(2)
+            self.cyname2 = self.petri.nombre_colonia(2)
+            self.author2 = self.petri.autor_colonia(2)
             
         if not self.headless:
             # Crear la figura matplotlib con subplots
@@ -320,7 +320,7 @@ class Grapher:
             
         self.ax_data.grid(True, alpha=0.3)
     
-    def get_contest_result(self) -> dict:
+    def resultado_competencia(self) -> dict:
         """
         Obtener los datos de la Competencia sin guardarlos en archivo
 
@@ -355,8 +355,4 @@ class Grapher:
             'timestamp': datetime.now().isoformat(),
             'completed': self.contest_completed
         }
-
-    # Alias en español
-    def obtener_resultado_competencia(self) -> dict:
-        """Alias en español para get_contest_result."""
-        return self.get_contest_result()
+    # Nota: el método ahora se llama en castellano `resultado_competencia`.
