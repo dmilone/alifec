@@ -1,57 +1,41 @@
-"""Shim de compatibilidad: reexporta Colonia como Colony
-
-Este archivo existe para evitar romper imports en `mos/` y en el
-resto del código que esperan `from lib.colony import Colony`.
-La implementación en castellano está en `lib.colonia`.
 """
-
-from .colonia import Colonia
-
-# Exponer el nombre original Colony para compatibilidad
-class Colony(Colonia):
-    pass
-# =====================================================================
-# COLONY: Cada colonia gobierna un grupo de microorganismos
-# Traducido de C++ a Python
-# =====================================================================
-
+COLONIA: Gestión de una colonia de microorganismos
+Versión con nombres en castellano (Colonia) para la migración
+"""
 from typing import List, Type, Optional
 from .defs import *
 from .agar import Posicion, Movimiento, agar
 from .microorg import Microorganismo
 
-class Colony:
+class Colonia:
     """
-    Clase Colony que gestiona un grupo de microorganismos del mismo tipo.
+    Clase Colonia que gestiona un grupo de microorganismos del mismo tipo.
+    Mantiene la misma lógica que la clase original `Colony` pero con nombres en castellano.
+    """
 
-    No modificar esta clase.
-    @autor Diego (traducido a Python)
-    """
-    
     def __init__(self, microorg_class: Type[Microorganismo], id: int, rad: int):
         self.ident: int = id
         self.n_mo_alives: int = 0
         self.max_x: int = 2 * rad
         self.max_y: int = 2 * rad
         self.microorg_class = microorg_class
-        
-    # Inicializar rejillas
+
+        # Inicializar rejillas
         self.my_mos: List[List[Optional[Microorganismo]]] = [[None for _ in range(self.max_y)] 
                                                              for _ in range(self.max_x)]
         self.movs: List[List[Movimiento]] = [[Movimiento(0, 0) for _ in range(self.max_y)] 
                                              for _ in range(self.max_x)]
         self.dups: List[List[bool]] = [[False for _ in range(self.max_y)] 
                                        for _ in range(self.max_x)]
-        
-    # Protótipo de MO para obtener nombre y autor
+
+        # Protótipo de MO para obtener nombre y autor
         self.proto_mo: Microorganismo = microorg_class()
-        
-    # Arrays de orden aleatorio
+
+        # Arrays de orden aleatorio
         self.xr: List[int] = list(range(self.max_x))
         self.yr: List[int] = list(range(self.max_y))
-        
+
     def __del__(self):
-        """Destructor para limpiar microorganismos"""
         try:
             if hasattr(self, 'my_mos') and hasattr(self, 'max_x') and hasattr(self, 'max_y'):
                 for x in range(self.max_x):
@@ -62,36 +46,30 @@ class Colony:
             if hasattr(self, 'proto_mo'):
                 del self.proto_mo
         except (AttributeError, IndexError, TypeError):
-            # Ignore cleanup errors during garbage collection
             pass
-        
+
     def n_alives(self) -> int:
-        """Devuelve el número de microorganismos vivos"""
         return self.n_mo_alives
-        
+
     def mov(self, x: int, y: int) -> Movimiento:
-        """Devuelve el movimiento que el MO en la posición x,y desea realizar"""
         try:
             return self.movs[x][y]
         except IndexError:
             return Movimiento(0, 0)
-        
+
     def moved(self, x: int, y: int) -> bool:
-        """Devuelve True si el MO intentó moverse"""
         try:
             return self.movs[x][y].dx != 0 or self.movs[x][y].dy != 0
         except IndexError:
             return False
-        
+
     def duplicate(self, x: int, y: int) -> bool:
-        """Devuelve True si el MO intentó reproducirse"""
         try:
             return self.dups[x][y]
         except IndexError:
             return False
-        
+
     def kill(self, x: int, y: int) -> None:
-        """Elimina un MO"""
         try:
             if self.my_mos[x][y] is not None:
                 del self.my_mos[x][y]
@@ -102,18 +80,16 @@ class Colony:
                 self.dups[x][y] = False
         except IndexError:
             return
-            
+
     def create(self, x: int, y: int) -> None:
-        """Crea un nuevo MO"""
         try:
             if self.my_mos[x][y] is None:
                 self.my_mos[x][y] = self.microorg_class()
                 self.n_mo_alives += 1
         except IndexError:
             return
-            
+
     def move(self, old: Posicion, neu: Posicion) -> None:
-        """Mueve un MO de una posición a otra"""
         try:
             self.my_mos[neu.x][neu.y] = self.my_mos[old.x][old.y]
             self.my_mos[old.x][old.y] = None
@@ -121,22 +97,21 @@ class Colony:
             self.movs[old.x][old.y].dy = 0
             self.dups[old.x][old.y] = False
         except IndexError:
-            return  # Skip invalid moves
-        
+            return
+
     def live(self, x: int, y: int) -> None:
-        """Da al MO la posibilidad de actuar (moverse/mitosis)"""
         x %= self.max_x
         y %= self.max_y
-        
+
         if x >= len(self.my_mos) or y >= len(self.my_mos[0]):
             return
-            
+
         if x >= len(self.xr) or y >= len(self.yr) or x < 0 or y < 0:
             return
-            
+
         xr_idx = self.xr[x]
         yr_idx = self.yr[y]
-        
+
         try:
             if self.my_mos[xr_idx][yr_idx] is not None:
                 pos = Posicion(xr_idx, yr_idx)
@@ -150,11 +125,9 @@ class Colony:
                 self.dups[xr_idx][yr_idx] = False
         except IndexError:
             return
-            
-    def name(self) -> str:
-        """Devuelve el nombre del tipo de microorganismo"""
+
+    def nombre(self) -> str:
         return self.proto_mo.nombre()
-        
-    def author(self) -> str:
-        """Devuelve el autor del tipo de microorganismo"""
+
+    def autor(self) -> str:
         return self.proto_mo.autor()
