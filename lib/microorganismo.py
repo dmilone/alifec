@@ -1,6 +1,5 @@
 # =====================================================================
-# MICROORGANISMO: Clase base en castellano con aliases en inglés
-# Se mantiene compatibilidad exportando los nombres en inglés como alias
+# MICROORGANISMO: clase base para desarrollar microorganismos
 # =====================================================================
 
 from abc import ABC
@@ -9,10 +8,9 @@ from .agar import Posicion, Movimiento
 
 class Microorganismo(ABC):
     """
-    Clase base para construir microorganismos (API en castellano).
-    Los nuevos microorganismos deben implementar la API en castellano.
+    Clase base para construir microorganismos.
 
-    @autor Diego (traducido a Python)
+    @autor Diego (traducido a Python por Diego)
     """
 
     def __init__(self):
@@ -20,7 +18,6 @@ class Microorganismo(ABC):
         self.pos: Posicion = None # posición actual: actualizada en cada paso de tiempo
         self.ene: float = 0.0     # energía actual: actualizada en cada paso de tiempo
 
-    # --- API en castellano ---------------------------------------------
     def nombre(self) -> str:
         """Devuelve el nombre del microorganismo."""
         return "microorganismo abstracto"
@@ -44,9 +41,9 @@ class Microorganismo(ABC):
 
     def decidir_movimiento(self, mov: Movimiento) -> None:
         """
-        Método en castellano para decidir el movimiento.
+        Método para decidir a dónde quiere moverse.
 
-        Implementación por defecto: quedarse en sitio.
+        Implementación por omisión: quedarse en sitio.
         Sobrescribir en subclases para definir comportamiento.
         """
         mov.dx = 0
@@ -54,7 +51,7 @@ class Microorganismo(ABC):
 
     def quiere_mitosis(self) -> bool:
         """
-        Método en castellano para decidir si se reproduce.
+        Método para decidir si se reproduce.
         Devolver True si desea duplicarse.
         """
         return False

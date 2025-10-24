@@ -17,7 +17,7 @@ class Petri:
     Una cápsula de Petri es un recipiente poco profundo que los biólogos usan
     para cultivar células (bacterianas, animales, vegetales o fúngicas).
 
-    No modificar esta clase directamente.
+    No modificar esta clase!
     @autor Diego (traducido a Python también por Diego)
     """
 
@@ -121,8 +121,6 @@ class Petri:
         except (AttributeError, TypeError):
             # Ignorar errores de limpieza durante la recolección de basura
             pass
-
-    # Nota: eliminados aliases en inglés. Usar los métodos en castellano.
 
     def mover_colonias(self) -> None:
         """Aplicar reglas de la vida y avanzar las colonias (nombres en castellano)."""
