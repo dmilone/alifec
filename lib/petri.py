@@ -11,7 +11,6 @@ from .agar import Posicion, Movimiento, agar, Celda
 from .colonia import Colonia
 from .microorganismo import Microorganismo
 
-
 class Petri:
     """
     Una cápsula de Petri es un recipiente poco profundo que los biólogos usan

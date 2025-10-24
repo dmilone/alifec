@@ -1,6 +1,6 @@
 # =====================================================================
-# AGAR: Sustancia gelatinosa usada como medio de cultivo para trabajos microbiológicos
-# Traducido desde C++ a Python
+# AGAR: Sustancia gelatinosa usada como medio de cultivo para 
+#       trabajos microbiológicos
 # =====================================================================
 
 from typing import List, Tuple
@@ -20,7 +20,7 @@ class Movimiento:
 
 @dataclass
 class Celda:
-    """Celda que contiene información del microorganismo y de nutrientes"""
+    """Celda que contiene información del microorganismo y nutrientes"""
     id_mo: int = 0           # identificador del microorganismo
     energia_mo: float = 0.0  # energía del microorganismo
     nutrientes: float = 0.0  # cantidad de nutrientes en esta posición
@@ -30,10 +30,11 @@ Celdas = List[List[Celda]]
 
 class Agar:
     """
-    Agar es una sustancia gelatinosa usada como medio de cultivo.
+    En la simulación el agar se usa sólo como interfaz con los microorganismos.
+    Este es el único punto de acceso para que los MOs obtengan información.
 
-    No modificar esta clase directamente.
-    @autor Diego (traducido a Python)
+    No modificar esta clase.
+    @autor Diego (traducido a Python por Diego)
     """
     
     def __init__(self):

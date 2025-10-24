@@ -1,5 +1,5 @@
 """
-DEFINICIONES: renombrado de `defs.py` a `definiciones.py` (compatibilidad)
+DEFINICIONES: Constantes usadas en la simulación de vida artificial.
 """
 
 # ID para una celda vacía
@@ -26,7 +26,7 @@ MAX_COLS = 8
 # Número de colonias en esta ejecución (actual)
 N_COL = 2
 
-# Radio del plato de Petri
+# Radio de la cápsula de Petri
 R = 25
 
 # Límite de FLOP permitido por movimiento de colonias (no usado directamente)
