@@ -20,11 +20,11 @@ class Petri:
     @autor Diego (traducido a Python también por Diego)
     """
 
-    def __init__(self, radius: int, dist: int, selected_cols: List[int], microorg_classes: Dict[int, Type[Microorganismo]]):
+    def __init__(self, radio: int, dist: int, colonias_seleccionadas: List[int], clases_mo: Dict[int, Type[Microorganismo]]):
         # Dimensiones
-        self.radio: int = radius
-        self.max_x: int = 2 * radius
-        self.max_y: int = 2 * radius
+        self.radio: int = radio
+        self.max_x: int = 2 * radio
+        self.max_y: int = 2 * radio
 
         # Desplazamiento de nutrientes (x,y)
         self.despl_x: int = 0
@@ -32,15 +32,15 @@ class Petri:
 
         # Distribución y tiempo
         self.dist_n: int = dist  # distribución de nutrientes actual
-        self.tiempo: int = 0  # contador de tiempo
+        self.tiempo: int = 0     # contador de tiempo
         self.max_tx_col: float = PROD_X_COL / 1e6  # tiempo máximo por movimiento de colonia
 
         # Estructuras principales
         self.colonias: List[Colonia] = []
         self.vivos: List[Posicion] = []
-        self.clases_microorg = microorg_classes
+        self.clases_microorg = clases_mo
         
-
+        # Aleatoriza la corrida
         random.seed(int(time.time()))
 
         # Crear la matriz de celdas
@@ -55,7 +55,7 @@ class Petri:
 
         # Crear colonias
         for c in range(N_COL):
-            self.agregar_colonia(radius, selected_cols[c])
+            self.agregar_colonia(radio, colonias_seleccionadas[c])
 
         # Asignar posiciones y energías iniciales
         for c in range(N_COL):
@@ -315,12 +315,12 @@ class Petri:
         if id_mo - 1 < len(self.colonias):
             self.colonias[id_mo - 1].eliminar(pos.x, pos.y)
 
-    def agregar_colonia(self, radius: int, selected_col: int) -> None:
+    def agregar_colonia(self, radio: int, colonia_seleccionada: int) -> None:
         """Agregar una colonia del tipo especificado (castellano)."""
         id_colony = len(self.colonias) + 1
 
-        if selected_col in self.clases_microorg:
-            colony = Colonia(self.clases_microorg[selected_col], id_colony, radius)
+        if colonia_seleccionada in self.clases_microorg:
+            colony = Colonia(self.clases_microorg[colonia_seleccionada], id_colony, radio)
             self.colonias.append(colony)
         else:
-            print(f"Advertencia: Tipo de microorganismo {selected_col} no encontrado")
+            print(f"Advertencia: Tipo de microorganismo {colonia_seleccionada} no encontrado")

@@ -25,12 +25,12 @@ pip install matplotlib numpy
 Ejecutar una simulación entre dos colonias de microorganismos:
 
 ```bash
-python comvida.py --dist 4 --colonies 0 1
+python comvida.py --distribucion 4 --colonias 0 1
 ```
 
 ### Opciones de línea de comandos
 
-- `--dist, -d`: Patrón de distribución de nutrientes (1-6)
+- `--distribucion, -d`: Patrón de distribución de nutrientes (1-6)
   - 1: Plano inclinado
   - 2: Barra vertical
   - 3: Anillo
@@ -38,7 +38,16 @@ python comvida.py --dist 4 --colonies 0 1
   - 5: Dos gaussianas
   - 6: Hambruna (uniforme)
 
-- `--colonies, -c`: Lista de tipos de microorganismos a competir (números separados por espacios)
+- `--colonias, -c`: Lista de tipos de microorganismos a competir (números separados por espacios)
+- `--listar-mos`: Lista todos los microorganismos disponibles y sale
+- `--actualizar-global <archivo>`: Actualiza el ranking global combinando todos los resultados disponibles
+- `--sin-grafico, --sin-graficos`: Ejecuta la simulación en modo sin gráficos (headless)
+
+#### Listar microorganismos
+
+```bash
+python comvida.py --listar-mos
+```
 
 ### Ejemplos simples de microorganismos
 
@@ -48,18 +57,26 @@ python comvida.py --dist 4 --colonies 0 1
 - **3: MOpp** - Siempre se mueve en diagonal arriba-derecha (por Compu2)
 - **4: MOxx** - Se mueve horizontalmente hacia la comida (por Compu2)
 - **5: MOyy** - Se mueve verticalmente hacia la comida (por Compu2)
-- **6: Tacticas1** - Estratégico: matar→comer→reproducir (por Compu2)
-- **7: Tacticas2** - Estratégico: comer→matar→reproducir (por Compu2)
+- **6: Tacticas1** - Estrategia: matar→comer→reproducir (por Compu2)
+- **7: Tacticas2** - Estrategia: comer→matar→reproducir (por Compu2)
 
 ## Ejemplos de competencia
 
 ```bash
 # Aleatorio vs buscador de nutrientes
-python comvida.py --dist 1 --colonies 0 1
+python comvida.py --distribucion 1 --colonias 0 1
 
 # Batalla estratégica
-python comvida.py --dist 5 --colonies 6 7
+python comvida.py --distribucion 5 --colonias 6 7
 
+```
+
+### Modo sin gráficos (headless)
+
+Para ejecutar sin abrir ventanas (útil en servidores/CI):
+
+```bash
+python comvida.py --sin-grafico --distribucion 2 --colonias 1 2
 ```
 
 ## Estructura del proyecto
@@ -148,7 +165,7 @@ La simulación muestra:
 - **Descubrimiento dinámico**: Los microorganismos se detectan automáticamente desde la carpeta `mos/`
 - **Resultados automáticos**: Los resultados se guardan en `resultados/competencias_YYMMDD.yml`
  - **Rankings diarios**: Se generan como `resultados/ranking_YYMMDD.txt`.
-- **Rankings globales**: Usar `--update-global filename.txt` para crear rankings globales
+- **Rankings globales**: Usar `--actualizar-global filename.txt` para crear/actualizar el ranking global
 
 ## Enlaces
 - Repositorio GitHub: https://github.com/dmilone/alifec
