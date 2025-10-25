@@ -13,7 +13,7 @@ El marco provee las reglas principales del juego, una interfaz de visualización
 
 ```bash
 conda env create -f environment.yml
-conda activate alife
+conda activate comvida
 ```
 
 ## Uso
