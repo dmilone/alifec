@@ -2,7 +2,7 @@
 # =====================================================================
 # COMVIDA: COMpetencia de VIDa Artificial
 # Traducción del proyecto desde C++ a Python
-# https://github.com/dmilone/alifec
+# https://github.com/dmilone/comvida
 # https://sourceforge.net/projects/alifecontest/
 # =====================================================================
 

@@ -78,7 +78,7 @@ python comvida.py --sin-grafico --distribucion 2 --colonias 1 2
 ## Estructura del proyecto
 
 ```
-alifec/
+comvida/
 ├── vida/                   # Clases principales de la simulación
 │   ├── definiciones.py    # Constantes y definiciones
 │   ├── agar.py            # Entorno (plato de Petri)
@@ -160,5 +160,5 @@ La simulación muestra:
 - **Rankings globales**: Usar `--actualizar-global filename.txt` para crear/actualizar el ranking global
 
 ## Enlaces
-- Repositorio GitHub: https://github.com/dmilone/alifec
+- Repositorio GitHub: https://github.com/dmilone/comvida
 - Proyecto original: https://sourceforge.net/projects/alifecontest/
