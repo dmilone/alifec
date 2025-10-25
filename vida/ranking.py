@@ -204,7 +204,6 @@ class RankingSystem:
         report.append(f"Total de colonias: {len(rankings)}")
         report.append("-" * 80)
         
-        # Cabecera (en castellano)
         report.append(f"{'Pos':<4} {'Colonia':<20} {'G-P-E':<8} {'%Vict':<6} {'Pts Med':<8} {'Pts Tot':<10}")
         report.append("-" * 80)
         
@@ -409,7 +408,8 @@ def main():
     """Command-line interface for ranking system.
 
     Usage:
-      python lib/ranking.py [DATE_PATTERN]
+      python vida/ranking.py [DATE_PATTERN]
+
     If DATE_PATTERN is provided, only contests matching that YYMMDD pattern are loaded.
     """
     import sys

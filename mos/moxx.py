@@ -3,8 +3,8 @@
 # Traducido de C++ a Python
 # =====================================================================
 
-from lib.microorganismo import Microorganismo
-from lib.agar import Movimiento, agar
+from vida.microorganismo import Microorganismo
+from vida.agar import Movimiento, agar
 
 class MOxx(Microorganismo):
     """

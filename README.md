@@ -9,15 +9,11 @@ El marco provee las reglas principales del juego, una interfaz de visualización
 - matplotlib
 - numpy
 
-### Opción 1: Usando conda (recomendado)
+### Instalación
+
 ```bash
 conda env create -f environment.yml
 conda activate alife
-```
-
-### Opción 2: Usando pip
-```bash
-pip install matplotlib numpy
 ```
 
 ## Uso
@@ -83,12 +79,12 @@ python comvida.py --sin-grafico --distribucion 2 --colonias 1 2
 
 ```
 alifec/
-├── lib/                    # Clases principales de la simulación
-│   ├── definiciones.py    # Constantes y definiciones (antes `defs.py`)
+├── vida/                   # Clases principales de la simulación
+│   ├── definiciones.py    # Constantes y definiciones
 │   ├── agar.py            # Entorno (plato de Petri)
-│   ├── microorganismo.py  # Clase base abstracta para microorganismos (API en castellano)
-│   ├── colonia.py         # Gestión de colonias (API en castellano)
-│   ├── petri.py           # Motor principal de la simulación (API en castellano)
+│   ├── microorganismo.py  # Clase base abstracta para microorganismos
+│   ├── colonia.py         # Gestión de colonias
+│   ├── petri.py           # Motor principal de la simulación
 │   └── graficacion.py     # Visualización (matplotlib) — clase principal: `Graficadora`
 ├── mos/                   # Implementaciones de microorganismos
 │   ├── aleatorio.py       # Movimiento aleatorio
@@ -110,17 +106,17 @@ alifec/
 ## Crear nuevos microorganismos
 
 1. Crear un nuevo archivo Python en el directorio `mos/`
-3. Heredar de la clase `Microorganismo`
-4. Implementar los métodos requeridos (API en castellano):
+2. Heredar de la clase `Microorganismo`
+3. Implementar los métodos requeridos:
     - `nombre()`: Devuelve el nombre del microorganismo
     - `autor()`: Devuelve el nombre del autor
     - `decidir_movimiento(mov)`: Define la estrategia de movimiento (obligatorio)
     - `quiere_mitosis()`: Define la estrategia de reproducción (obligatorio)
 
-Ejemplo (API en castellano):
+Ejemplo:
 ```python
-from ..lib.microorganismo import Microorganismo
-from ..lib.agar import Movimiento
+from vida.microorganismo import Microorganismo
+from vida.agar import Movimiento
 
 class MiMicroorganismo(Microorganismo):
     def nombre(self) -> str:
@@ -137,10 +133,6 @@ class MiMicroorganismo(Microorganismo):
     def quiere_mitosis(self) -> bool:
         return self.ene > 1000  # Reproducir si la energía > 1000
 ```
-
-Nota: desde esta versión la API pública de microorganismos es exclusivamente
-en castellano. Implementa `decidir_movimiento` y `quiere_mitosis` en tus
-microorganismos. Los nombres legacy en inglés han sido eliminados.
 
 4. El sistema detectará automáticamente el nuevo microorganismo
 
@@ -164,7 +156,7 @@ La simulación muestra:
 
 - **Descubrimiento dinámico**: Los microorganismos se detectan automáticamente desde la carpeta `mos/`
 - **Resultados automáticos**: Los resultados se guardan en `resultados/competencias_YYMMDD.yml`
- - **Rankings diarios**: Se generan como `resultados/ranking_YYMMDD.txt`.
+- **Rankings diarios**: Se generan como `resultados/ranking_YYMMDD.txt`.
 - **Rankings globales**: Usar `--actualizar-global filename.txt` para crear/actualizar el ranking global
 
 ## Enlaces

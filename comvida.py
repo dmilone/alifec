@@ -14,10 +14,10 @@ import importlib
 import inspect
 from typing import Dict, Type, List
 
-from lib.definiciones import *
-from lib.petri import Petri
-from lib.microorganismo import Microorganismo
-from lib.ranking import RankingSystem
+from vida.definiciones import *
+from vida.petri import Petri
+from vida.microorganismo import Microorganismo
+from vida.ranking import RankingSystem
 
 def obtener_clases_mo() -> Dict[int, Type[Microorganismo]]:
     """Descubre dinámicamente las clases de microorganismos en la carpeta mos"""
@@ -71,15 +71,15 @@ Ejemplos:
     '''
     )
     
-    parser.add_argument('--distribucion', '-d', dest='dist', type=int, default=MAX_DNUTRI,
+    parser.add_argument('--distribucion', '-d', dest='distribucion', type=int, default=MAX_DNUTRI,
                        help=f'Distribución de nutrientes, entre 1 y {MAX_DNUTRI}')
-    parser.add_argument('--colonias', '-c', dest='colonies', type=int, nargs='+',
+    parser.add_argument('--colonias', '-c', dest='colonias', type=int, nargs='+',
                        help='Lista de microorganismos (números separados por espacios)')
-    parser.add_argument('--listar-mos', dest='list_mos', action='store_true',
+    parser.add_argument('--listar-mos', dest='listar_mos', action='store_true',
                        help='Listar todos los microorganismos disponibles y salir')
-    parser.add_argument('--actualizar-global', dest='update_global', type=str, metavar='ARCHIVO_RANKING_GLOBAL',
+    parser.add_argument('--actualizar-global', dest='actualizar_global', type=str, metavar='ARCHIVO_RANKING_GLOBAL',
                        help='Actualizar el archivo de ranking global con todos los resultados disponibles')
-    parser.add_argument('--sin-grafico', '--sin-graficos', dest='no_plot', action='store_true',
+    parser.add_argument('--sin-grafico', '--sin-graficos', dest='sin_grafico', action='store_true',
                        help='Ejecutar la simulación en modo sin gráficos (headless)')
     
     args = parser.parse_args()
@@ -89,7 +89,7 @@ Ejemplos:
     max_cols = len(clases_mo) - 1  # 0-indexed
     
     # Listar microorganismos y salir
-    if args.list_mos:
+    if args.listar_mos:
         print("Microorganismos disponibles:")
         for i, cls in clases_mo.items():
             instance = cls()
@@ -97,12 +97,12 @@ Ejemplos:
         return 0
     
     # Actualizar ranking global y salir
-    if args.update_global:
+    if args.actualizar_global:
         ranking_system = RankingSystem()
-        return ranking_system.update_global_ranking(args.update_global)
+        return ranking_system.update_global_ranking(args.actualizar_global)
 
     # Validar que se definan las colonias a competir
-    if not args.colonies:
+    if not args.colonias:
         print("\nError: --colonias es necesario para iniciar la competencia")
         print(f"Uso: {sys.argv[0]} --distribucion <1-{MAX_DNUTRI}> --colonias <organismo1_ID> <organismo2_ID>")
         print(f"Microorganismos disponibles: 0-{max_cols}")
@@ -111,10 +111,10 @@ Ejemplos:
     
     # Verificar parámetros de entrada para la competencia simple
     error = False
-    if args.dist > MAX_DNUTRI or len(args.colonies) != 2:
+    if args.distribucion > MAX_DNUTRI or len(args.colonias) != 2:
         error = True
     else:
-        for col in args.colonies:
+        for col in args.colonias:
             if col > max_cols:
                 error = True
                 break
@@ -130,24 +130,21 @@ Ejemplos:
     graficadora = None
     try:
         # Crear cápsula de Petri con colonias seleccionadas
-        petri = Petri(R, args.dist, args.colonies, clases_mo)
+        petri = Petri(R, args.distribucion, args.colonias, clases_mo)
 
         # Definir el backend de matplotlib para el modo sin gráficos antes de importar Graficadora
-        if args.no_plot:
+        if args.sin_grafico:
             import matplotlib
             matplotlib.use('Agg')
 
-        # Crear y ejecutar visualización (modo headless --no-plot)
-        # Usar el módulo en castellano `grafica`
-        from lib.graficacion import Graficadora
-        graficadora = Graficadora(headless=args.no_plot)
+        # Crear y ejecutar visualización (modo headless)
+        from vida.graficacion import Graficadora
+        graficadora = Graficadora(headless=args.sin_grafico)
         graficadora.crear_ventanas(petri)
 
         # Obtener datos de resultados de la competencia
         contest_data = graficadora.resultado_competencia()
 
-        # Ahora el sistema de ranking acepta claves en castellano, así que
-        # pasamos el diccionario tal cual.
         if contest_data.get('completada', False):
             ranking_system = RankingSystem()
             ranking_system.guardar_resultado_competencia(contest_data)

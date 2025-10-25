@@ -87,7 +87,7 @@ class Petri:
         self.dy = random.randint(-1, 1)
 
     def calcular_nutrientes(self, x: int, y: int, dist: int) -> float:
-        """Calcula la cantidad de nutrientes según el tipo de distribución (castellano)."""
+        """Calcula la cantidad de nutrientes según el tipo de distribución."""
         max_x, max_y = self.max_x, self.max_y
 
         if dist == 1:  # Plano inclinado
@@ -122,7 +122,7 @@ class Petri:
             pass
 
     def mover_colonias(self) -> None:
-        """Aplicar reglas de la vida y avanzar las colonias (nombres en castellano)."""
+        """Aplicar reglas de la vida y avanzar las colonias."""
         # Avanzar tiempo
         self.tiempo += 1
 
@@ -168,7 +168,6 @@ class Petri:
 
                 # Pedir al MO que ejecute una iteración de vida
                 if c < len(self.colonias):
-                    # Iteración de vida usando API en castellano
                     self.colonias[c].vivir(x, y)
 
                     # Restar energía por moverse
@@ -203,16 +202,15 @@ class Petri:
             agar.ry += self.dy
 
     def nombre_colonia(self, id: int) -> str:
-        """Obtener el nombre de la colonia (nombre en castellano)."""
-        # Las colonias ahora exponen `nombre()` (Colonia.nombre)
+        """Obtener el nombre de la colonia."""
         return self.colonias[(id - 1) % N_COL].nombre()
 
     def autor_colonia(self, id: int) -> str:
-        """Obtener el nombre del autor (en castellano)."""
+        """Obtener el nombre del autor."""
         return self.colonias[(id - 1) % N_COL].autor()
 
     def puede_mover(self, old: Posicion, mov: Movimiento, neu: Posicion) -> bool:
-        """Verificar si el movimiento es válido (nombre en castellano)."""
+        """Verificar si el movimiento es válido."""
         neu.x = old.x
         neu.y = old.y
 
@@ -230,12 +228,12 @@ class Petri:
         return False
 
     def esta_en_plato(self, pos: Posicion) -> bool:
-        """Verificar si una posición está dentro del plato de Petri (castellano)."""
+        """Verificar si una posición está dentro del plato de Petri."""
         x, y, r = pos.x, pos.y, self.radio
         return (r - x) * (r - x) + (r - y) * (r - y) < r * r
 
     def competir(self, old: Posicion, neu: Posicion) -> None:
-        """Combate entre dos microorganismos (nombre en castellano)."""
+        """Combate entre dos microorganismos."""
         ener1 = agar.celdas[old.x][old.y].energia_mo
         ener2 = agar.celdas[neu.x][neu.y].energia_mo
 
@@ -279,7 +277,7 @@ class Petri:
                     break
 
     def crear_mo(self, pos: Posicion, id: int, ener: float) -> None:
-        """Crear microorganismo (nombre en castellano)."""
+        """Crear microorganismo."""
         agar.celdas[pos.x][pos.y].id_mo = id
         agar.celdas[pos.x][pos.y].energia_mo = ener
 
@@ -288,7 +286,7 @@ class Petri:
             self.colonias[id - 1].crear(pos.x, pos.y)
 
     def mover_mo(self, old: Posicion, neu: Posicion) -> None:
-        """Mover microorganismo (castellano)."""
+        """Mover microorganismo."""
         id_mo = agar.celdas[old.x][old.y].id_mo
 
         # Copiar a la nueva posición
@@ -304,7 +302,7 @@ class Petri:
             self.colonias[id_mo - 1].mover(old, neu)
 
     def eliminar_mo(self, pos: Posicion) -> None:
-        """Eliminar microorganismo (castellano)."""
+        """Eliminar microorganismo."""
         id_mo = agar.celdas[pos.x][pos.y].id_mo
 
         # Vaciar la celda
@@ -316,7 +314,7 @@ class Petri:
             self.colonias[id_mo - 1].eliminar(pos.x, pos.y)
 
     def agregar_colonia(self, radio: int, colonia_seleccionada: int) -> None:
-        """Agregar una colonia del tipo especificado (castellano)."""
+        """Agregar una colonia del tipo especificado."""
         id_colony = len(self.colonias) + 1
 
         if colonia_seleccionada in self.clases_microorg:

@@ -44,7 +44,6 @@ class Graficadora:
 
     def crear_ventanas(self, petri_instance) -> None:
         self.petri = petri_instance
-        # Usar API en castellano: `colonias`, `nombre_colonia`, `autor_colonia`
         if len(self.petri.colonias) >= 1:
             self.nombre_col1 = self.petri.nombre_colonia(1)
             self.autor_col1 = self.petri.autor_colonia(1)
@@ -79,7 +78,6 @@ class Graficadora:
         self.iniciado = True
         max_iteraciones = 10000
         while not self.fin_competencia and self.t < max_iteraciones:
-            # Usar la versión en castellano
             self.petri.mover_colonias()
             self.t += 1
             self.actualizar_estadisticas()
@@ -237,8 +235,7 @@ class Graficadora:
         else:
             ganador = "Empate"
             puntos_ganador = 0
-        # Devolver resultados con claves en castellano. Los consumidores pueden
-        # traducir a los nombres esperados por el sistema de ranking si es necesario.
+
         return {
             'enfrentamiento': f'{self.nombre_col1} vs {self.nombre_col2}',
             'ganador': ganador,

@@ -5,9 +5,9 @@
 
 import random
 from typing import List, Tuple
-from lib.microorganismo import Microorganismo
-from lib.agar import Movimiento, agar, Posicion
-from lib.definiciones import VACIO
+from vida.microorganismo import Microorganismo
+from vida.agar import Movimiento, agar, Posicion
+from vida.definiciones import VACIO
 
 class Tacticas1(Microorganismo):
     """
